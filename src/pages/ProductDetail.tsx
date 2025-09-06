@@ -158,12 +158,20 @@ const ProductDetail = () => {
               <CardContent className="p-4 lg:p-6">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-3 lg:space-x-4">
-                    <Avatar className="h-10 w-10 lg:h-14 lg:w-14">
+                    <Avatar 
+                      className="h-10 w-10 lg:h-14 lg:w-14 cursor-pointer hover:ring-2 hover:ring-primary/50 transition-all"
+                      onClick={() => navigate(`/seller/${product.sellerId}`)}
+                    >
                       <AvatarImage src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${product.sellerId}`} />
                       <AvatarFallback>{product.sellerName[0]}</AvatarFallback>
                     </Avatar>
                     <div>
-                      <p className="font-medium lg:text-lg">{product.sellerName}</p>
+                      <p 
+                        className="font-medium lg:text-lg cursor-pointer hover:text-primary transition-colors"
+                        onClick={() => navigate(`/seller/${product.sellerId}`)}
+                      >
+                        {product.sellerName}
+                      </p>
                       <div className="flex flex-col lg:flex-row lg:items-center lg:gap-2">
                         <p className="text-sm text-muted-foreground flex items-center gap-1">
                           <Badge variant="outline" className="text-xs">Student</Badge>
@@ -174,7 +182,10 @@ const ProductDetail = () => {
                           <div className="flex items-center gap-1 mt-1 lg:mt-0">
                             <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
                             <span className="text-xs font-medium">{averageRating.toFixed(1)}</span>
-                            <span className="text-xs text-muted-foreground">
+                            <span 
+                              className="text-xs text-muted-foreground hover:text-primary cursor-pointer transition-colors"
+                              onClick={() => navigate(`/seller/${product.sellerId}`)}
+                            >
                               ({sellerReviews.length} reviews)
                             </span>
                           </div>
@@ -182,6 +193,14 @@ const ProductDetail = () => {
                       </div>
                     </div>
                   </div>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => navigate(`/seller/${product.sellerId}`)}
+                    className="hidden lg:inline-flex"
+                  >
+                    View Profile
+                  </Button>
                 </div>
               </CardContent>
             </Card>

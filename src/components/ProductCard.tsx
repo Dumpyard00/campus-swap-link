@@ -99,10 +99,20 @@ export const ProductCard = ({ product, showActions, onEdit, onDelete }: ProductC
             </span>
           </div>
 
-          <p className="text-xs text-muted-foreground flex items-center gap-1.5">
-            <span className="inline-block w-4 h-4 bg-muted rounded-full" aria-hidden="true"></span>
+          <Link 
+            to={`/seller/${product.sellerId}`} 
+            className="text-xs text-muted-foreground flex items-center gap-1.5 hover:text-primary transition-colors"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <span className="inline-block w-4 h-4 bg-muted rounded-full overflow-hidden" aria-hidden="true">
+              <img 
+                src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${product.sellerId}`}
+                className="w-full h-full object-cover"
+                alt=""
+              />
+            </span>
             <span aria-label={`Sold by ${product.sellerName}`}>{product.sellerName}</span>
-          </p>
+          </Link>
         </div>
 
         {showActions && (

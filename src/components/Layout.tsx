@@ -55,7 +55,7 @@ export const Layout = ({
     { icon: Package, label: 'My Items', path: '/my-listings' },
     { icon: Heart, label: 'Wishlist', path: '/wishlist' },
     { icon: MessageCircle, label: 'Messages', path: '/messages' },
-    { icon: User, label: 'Profile', path: '/dashboard' },
+    { icon: User, label: 'Profile', path: '/seller/1' }, // Using the current user's ID
   ];
 
   return (
