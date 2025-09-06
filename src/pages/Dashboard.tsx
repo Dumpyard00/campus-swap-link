@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 
 const Dashboard = () => {
   const userReviews = dummyReviews.filter(r => r.sellerId === dummyUser.id);
-  
+
   const stats = [
     {
       title: 'Items Listed',
@@ -50,7 +50,7 @@ const Dashboard = () => {
                   {dummyUser.name.split(' ').map(n => n[0]).join('')}
                 </AvatarFallback>
               </Avatar>
-              
+
               <div className="flex-1">
                 <h1 className="text-2xl font-bold mb-1">{dummyUser.name}</h1>
                 <p className="text-muted-foreground mb-2">{dummyUser.email}</p>
@@ -64,10 +64,12 @@ const Dashboard = () => {
                   <span className="text-muted-foreground">({dummyUser.reviewCount} reviews)</span>
                 </div>
               </div>
-              
-              <Button variant="outline">
-                <Edit className="h-4 w-4 mr-2" />
-                Edit Profile
+
+              <Button variant="outline" asChild>
+                <Link to="/settings">
+                  <Edit className="h-4 w-4 mr-2" />
+                  Edit Profile
+                </Link>
               </Button>
             </div>
           </CardContent>
@@ -106,21 +108,21 @@ const Dashboard = () => {
                   <span className="text-sm">Sell Item</span>
                 </Link>
               </Button>
-              
+
               <Button asChild variant="outline" className="h-auto p-4 flex-col">
                 <Link to="/my-listings">
                   <Package className="h-6 w-6 mb-2" />
                   <span className="text-sm">My Listings</span>
                 </Link>
               </Button>
-              
+
               <Button asChild variant="outline" className="h-auto p-4 flex-col">
                 <Link to="/wishlist">
                   <Heart className="h-6 w-6 mb-2" />
                   <span className="text-sm">Wishlist</span>
                 </Link>
               </Button>
-              
+
               <Button asChild variant="outline" className="h-auto p-4 flex-col">
                 <Link to="/messages">
                   <MessageCircle className="h-6 w-6 mb-2" />

@@ -19,6 +19,7 @@ const MyListings = lazy(() => import("./pages/MyListings"));
 const Dashboard = lazy(() => import("./pages/Dashboard"));
 const Wishlist = lazy(() => import("./pages/Wishlist"));
 const Messages = lazy(() => import("./pages/Messages"));
+const Settings = lazy(() => import("./pages/Settings"));
 
 // Loading fallback
 const PageLoader = () => (
@@ -41,6 +42,7 @@ const AppRoutes = () => {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/wishlist" element={<Wishlist />} />
         <Route path="/messages" element={<Messages />} />
+        <Route path="/settings" element={<Settings />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Suspense>
