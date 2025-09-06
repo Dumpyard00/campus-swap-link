@@ -18,163 +18,271 @@ export interface User {
   campus: string;
   avatar: string;
   joinedDate: string;
+  role: 'student' | 'teacher' | 'staff';
+  rating: number;
+  reviewCount: number;
+  phone: string;
 }
 
-export interface CartItem {
+export interface WishlistItem {
   productId: string;
-  quantity: number;
+  addedDate: string;
 }
 
-export interface Purchase {
+export interface Message {
+  id: string;
+  senderId: string;
+  receiverId: string;
+  productId: string;
+  message: string;
+  timestamp: string;
+  isRead: boolean;
+}
+
+export interface ChatThread {
   id: string;
   productId: string;
   product: Product;
-  purchaseDate: string;
-  amount: number;
-  status: 'completed' | 'pending' | 'cancelled';
+  sellerId: string;
+  sellerName: string;
+  buyerId: string;
+  buyerName: string;
+  lastMessage: string;
+  lastMessageTime: string;
+  unreadCount: number;
+}
+
+export interface Review {
+  id: string;
+  sellerId: string;
+  buyerId: string;
+  productId: string;
+  rating: number;
+  comment: string;
+  date: string;
 }
 
 export const CATEGORIES = [
+  'Snacks & Food',
+  'Stationery',
+  'Books & Notes',
+  'Clothing & Shoes',
   'Electronics',
-  'Books',
-  'Furniture',
-  'Notes',
-  'Clothing',
-  'Sports',
-  'Kitchen',
+  'Sports Equipment',
+  'Hostel Items',
+  'Study Materials',
   'Other'
 ];
 
 export const dummyUser: User = {
   id: '1',
-  name: 'Alex Johnson',
-  email: 'alex.johnson@university.edu',
-  campus: 'Central University',
-  avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face',
-  joinedDate: '2024-01-15'
+  name: 'Arjun Sharma',
+  email: 'arjun.sharma@university.edu',
+  campus: 'IIT Delhi',
+  avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face',
+  joinedDate: '2024-01-15',
+  role: 'student',
+  rating: 4.7,
+  reviewCount: 23,
+  phone: '+91-9876543210'
 };
 
 export const dummyProducts: Product[] = [
   {
     id: '1',
-    title: 'MacBook Pro 13" 2021',
-    price: 1200,
-    category: 'Electronics',
-    description: 'Excellent condition MacBook Pro with M1 chip. Perfect for students. Includes charger and original box.',
-    image: 'https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=300&h=300&fit=crop',
+    title: 'Kurkure Family Pack (5 packs)',
+    price: 150,
+    category: 'Snacks & Food',
+    description: 'Fresh Kurkure family pack with 5 different flavors. Perfect for late night study sessions!',
+    image: 'https://images.unsplash.com/photo-1566478989037-eec170784d0b?w=300&h=300&fit=crop',
     sellerId: '2',
-    sellerName: 'Sarah Chen',
+    sellerName: 'Priya Patel',
     createdAt: '2024-02-01',
-    condition: 'like-new'
+    condition: 'new'
   },
   {
     id: '2',
-    title: 'Calculus Textbook - 10th Edition',
-    price: 45,
-    category: 'Books',
-    description: 'Stewart Calculus textbook in great condition. No highlighting or writing inside.',
+    title: 'Physics Reference Book - HC Verma',
+    price: 450,
+    category: 'Books & Notes',
+    description: 'Concepts of Physics Part 1 & 2 by HC Verma. Excellent condition with minimal markings.',
     image: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=300&h=300&fit=crop',
     sellerId: '3',
-    sellerName: 'Mike Rodriguez',
+    sellerName: 'Rahul Kumar',
     createdAt: '2024-02-03',
     condition: 'good'
   },
   {
     id: '3',
-    title: 'IKEA Desk Chair',
-    price: 80,
-    category: 'Furniture',
-    description: 'Comfortable office chair from IKEA. Adjustable height and good back support.',
-    image: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=300&h=300&fit=crop',
+    title: 'Nike Air Force 1 (Size 9)',
+    price: 2500,
+    category: 'Clothing & Shoes',
+    description: 'Authentic Nike Air Force 1 in white. Size 9 UK. Gently used, perfect for campus wear.',
+    image: 'https://images.unsplash.com/photo-1549298916-b41d501d3772?w=300&h=300&fit=crop',
     sellerId: '4',
-    sellerName: 'Emma Davis',
+    sellerName: 'Amit Singh',
     createdAt: '2024-02-05',
     condition: 'good'
   },
   {
     id: '4',
-    title: 'Physics 101 Complete Notes',
-    price: 25,
-    category: 'Notes',
-    description: 'Comprehensive handwritten notes for Physics 101. Includes all chapters and practice problems.',
+    title: 'Engineering Handwritten Notes Bundle',
+    price: 300,
+    category: 'Study Materials',
+    description: 'Complete semester notes for Computer Science Engineering. Covers DSA, OS, DBMS, and Networks.',
     image: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=300&h=300&fit=crop',
     sellerId: '5',
-    sellerName: 'David Kim',
+    sellerName: 'Deepika Rao',
     createdAt: '2024-02-07',
     condition: 'like-new'
   },
   {
     id: '5',
-    title: 'iPhone 13 - 128GB',
-    price: 650,
+    title: 'Samsung Galaxy Buds Pro',
+    price: 3500,
     category: 'Electronics',
-    description: 'iPhone 13 in excellent condition. Battery health 95%. Includes case and screen protector.',
-    image: 'https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=300&h=300&fit=crop',
+    description: 'Barely used Samsung Galaxy Buds Pro with active noise cancellation. Includes original case and charging cable.',
+    image: 'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=300&h=300&fit=crop',
     sellerId: '6',
-    sellerName: 'Lisa Wang',
+    sellerName: 'Vikash Gupta',
     createdAt: '2024-02-10',
     condition: 'like-new'
   },
   {
     id: '6',
-    title: 'Mini Fridge - Perfect for Dorm',
-    price: 120,
-    category: 'Furniture',
-    description: 'Compact refrigerator perfect for dorm rooms. Energy efficient and quiet operation.',
-    image: 'https://images.unsplash.com/photo-1571175443880-49e1d25b2bc5?w=300&h=300&fit=crop',
+    title: 'Study Table with Storage',
+    price: 1500,
+    category: 'Hostel Items',
+    description: 'Compact study table perfect for hostel rooms. Includes storage compartments and cable management.',
+    image: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=300&h=300&fit=crop',
     sellerId: '7',
-    sellerName: 'Tom Wilson',
+    sellerName: 'Meera Joshi',
     createdAt: '2024-02-12',
+    condition: 'good'
+  },
+  {
+    id: '7',
+    title: 'Parker Pen Set (Blue & Black)',
+    price: 200,
+    category: 'Stationery',
+    description: 'Premium Parker pen set with blue and black refills. Perfect for exams and assignments.',
+    image: 'https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?w=300&h=300&fit=crop',
+    sellerId: '8',
+    sellerName: 'Rohit Sharma',
+    createdAt: '2024-02-14',
+    condition: 'like-new'
+  },
+  {
+    id: '8',
+    title: 'Cricket Kit (Bat, Ball, Pads)',
+    price: 3200,
+    category: 'Sports Equipment',
+    description: 'Complete cricket kit with Kashmir willow bat, leather ball, and protective gear. Great for campus tournaments.',
+    image: 'https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?w=300&h=300&fit=crop',
+    sellerId: '9',
+    sellerName: 'Karan Malhotra',
+    createdAt: '2024-02-16',
     condition: 'good'
   }
 ];
 
-export const dummyCartItems: CartItem[] = [
-  { productId: '2', quantity: 1 },
-  { productId: '4', quantity: 1 }
+export const dummyWishlistItems: WishlistItem[] = [
+  { productId: '2', addedDate: '2024-02-15' },
+  { productId: '4', addedDate: '2024-02-16' },
+  { productId: '7', addedDate: '2024-02-17' }
 ];
 
-export const dummyPurchases: Purchase[] = [
+export const dummyChatThreads: ChatThread[] = [
   {
-    id: 'p1',
-    productId: '1',
-    product: dummyProducts[0],
-    purchaseDate: '2024-01-20',
-    amount: 1200,
-    status: 'completed'
+    id: 'c1',
+    productId: '2',
+    product: dummyProducts[1],
+    sellerId: '3',
+    sellerName: 'Rahul Kumar',
+    buyerId: '1',
+    buyerName: 'Arjun Sharma',
+    lastMessage: 'Is the book still available?',
+    lastMessageTime: '2024-02-18T10:30:00Z',
+    unreadCount: 1
   },
   {
-    id: 'p2',
-    productId: '3',
-    product: dummyProducts[2],
-    purchaseDate: '2024-01-25',
-    amount: 80,
-    status: 'completed'
+    id: 'c2',
+    productId: '5',
+    product: dummyProducts[4],
+    sellerId: '6',
+    sellerName: 'Vikash Gupta',
+    buyerId: '1',
+    buyerName: 'Arjun Sharma',
+    lastMessage: 'Can we meet at Central Library?',
+    lastMessageTime: '2024-02-17T15:45:00Z',
+    unreadCount: 0
+  }
+];
+
+export const dummyMessages: Message[] = [
+  {
+    id: 'm1',
+    senderId: '1',
+    receiverId: '3',
+    productId: '2',
+    message: 'Hi! Is the HC Verma book still available?',
+    timestamp: '2024-02-18T10:30:00Z',
+    isRead: false
+  },
+  {
+    id: 'm2',
+    senderId: '3',
+    receiverId: '1',
+    productId: '2',
+    message: 'Yes, it\'s available. Are you interested?',
+    timestamp: '2024-02-18T10:35:00Z',
+    isRead: true
+  }
+];
+
+export const dummyReviews: Review[] = [
+  {
+    id: 'r1',
+    sellerId: '3',
+    buyerId: '1',
+    productId: '2',
+    rating: 5,
+    comment: 'Great seller! Book was in excellent condition as described.',
+    date: '2024-02-10'
+  },
+  {
+    id: 'r2',
+    sellerId: '6',
+    buyerId: '1',
+    productId: '5',
+    rating: 4,
+    comment: 'Quick response and fair pricing. Recommended!',
+    date: '2024-02-08'
   }
 ];
 
 export const dummyUserListings: Product[] = [
   {
-    id: '7',
-    title: 'Biology Textbook Bundle',
-    price: 85,
-    category: 'Books',
-    description: 'Complete set of biology textbooks for first year. All in excellent condition.',
-    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=300&fit=crop',
+    id: '9',
+    title: 'Maggi Noodles Bulk Pack (12 packets)',
+    price: 144,
+    category: 'Snacks & Food',
+    description: 'Fresh Maggi noodles bulk pack. Perfect for hostel life! Expires in 6 months.',
+    image: 'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=300&h=300&fit=crop',
     sellerId: '1',
-    sellerName: 'Alex Johnson',
+    sellerName: 'Arjun Sharma',
     createdAt: '2024-02-01',
-    condition: 'like-new'
+    condition: 'new'
   },
   {
-    id: '8',
-    title: 'Gaming Mouse & Keyboard',
-    price: 60,
+    id: '10',
+    title: 'Logitech Wireless Mouse',
+    price: 800,
     category: 'Electronics',
-    description: 'RGB gaming peripherals in great condition. Perfect for gaming or general use.',
-    image: 'https://images.unsplash.com/photo-1541140532154-b024d705b90a?w=300&h=300&fit=crop',
+    description: 'Logitech M705 wireless mouse with 3-year battery life. Perfect for laptop users.',
+    image: 'https://images.unsplash.com/photo-1527814050087-3793815479db?w=300&h=300&fit=crop',
     sellerId: '1',
-    sellerName: 'Alex Johnson',
+    sellerName: 'Arjun Sharma',
     createdAt: '2024-01-28',
     condition: 'good'
   }

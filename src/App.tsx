@@ -12,8 +12,8 @@ import ProductDetail from "./pages/ProductDetail";
 import AddProduct from "./pages/AddProduct";
 import MyListings from "./pages/MyListings";
 import Dashboard from "./pages/Dashboard";
-import Cart from "./pages/Cart";
-import Purchases from "./pages/Purchases";
+import Wishlist from "./pages/Wishlist";
+import Messages from "./pages/Messages";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -32,8 +32,8 @@ const App = () => (
           <Route path="/products/:id" element={<ProductDetail />} />
           <Route path="/my-listings" element={<MyListings />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/purchases" element={<Purchases />} />
+          <Route path="/wishlist" element={<Wishlist />} />
+          <Route path="/messages" element={<Messages />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

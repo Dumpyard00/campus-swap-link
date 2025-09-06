@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ShoppingCart, User, Package, Home, Plus } from 'lucide-react';
+import { Heart, User, Package, Home, Plus, MessageCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
@@ -17,7 +17,8 @@ export const Layout = ({ children, showBottomNav = true, showHeader = true }: La
     { icon: Home, label: 'Home', path: '/products' },
     { icon: Plus, label: 'Sell', path: '/products/new' },
     { icon: Package, label: 'My Items', path: '/my-listings' },
-    { icon: ShoppingCart, label: 'Cart', path: '/cart' },
+    { icon: Heart, label: 'Wishlist', path: '/wishlist' },
+    { icon: MessageCircle, label: 'Messages', path: '/messages' },
     { icon: User, label: 'Profile', path: '/dashboard' },
   ];
 
@@ -27,16 +28,21 @@ export const Layout = ({ children, showBottomNav = true, showHeader = true }: La
         <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
           <div className="container flex h-14 items-center justify-between px-4">
             <Link to="/" className="flex items-center space-x-2">
-              <div className="w-8 h-8 rounded-lg gradient-primary flex items-center justify-center">
+              <div className="w-8 h-8 rounded-lg bg-primary-solid flex items-center justify-center">
                 <span className="text-primary-foreground font-bold text-sm">CD</span>
               </div>
-              <span className="font-bold text-lg">CampusDeals</span>
+              <span className="font-bold text-lg hidden md:block">CampusDeals</span>
             </Link>
             
             <div className="flex items-center space-x-2">
-              <Button variant="ghost" size="sm" asChild>
-                <Link to="/cart">
-                  <ShoppingCart className="h-5 w-5" />
+              <Button variant="ghost" size="sm" asChild className="hidden md:flex">
+                <Link to="/wishlist">
+                  <Heart className="h-5 w-5" />
+                </Link>
+              </Button>
+              <Button variant="ghost" size="sm" asChild className="hidden md:flex">
+                <Link to="/messages">
+                  <MessageCircle className="h-5 w-5" />
                 </Link>
               </Button>
               <Button variant="ghost" size="sm" asChild>
@@ -54,8 +60,8 @@ export const Layout = ({ children, showBottomNav = true, showHeader = true }: La
       </main>
 
       {showBottomNav && (
-        <nav className="fixed bottom-0 left-0 right-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-t">
-          <div className="grid h-16 max-w-lg mx-auto grid-cols-5">
+        <nav className="fixed bottom-0 left-0 right-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-t md:hidden">
+          <div className="grid h-16 max-w-lg mx-auto grid-cols-6">
             {navItems.map(({ icon: Icon, label, path }) => {
               const isActive = location.pathname === path;
               return (

@@ -3,11 +3,13 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
-import { dummyUser, dummyUserListings, dummyPurchases } from '@/lib/dummy-data';
-import { User, Package, ShoppingBag, Edit, Calendar } from 'lucide-react';
+import { dummyUser, dummyUserListings, dummyChatThreads, dummyReviews } from '@/lib/dummy-data';
+import { User, Package, MessageCircle, Edit, Calendar, Star, Heart } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Dashboard = () => {
+  const userReviews = dummyReviews.filter(r => r.sellerId === dummyUser.id);
+  
   const stats = [
     {
       title: 'Items Listed',
@@ -16,22 +18,28 @@ const Dashboard = () => {
       description: 'Active listings'
     },
     {
-      title: 'Items Purchased',
-      value: dummyPurchases.length,
-      icon: ShoppingBag,
-      description: 'All time'
+      title: 'Active Chats',
+      value: dummyChatThreads.length,
+      icon: MessageCircle,
+      description: 'Conversations'
+    },
+    {
+      title: 'Seller Rating',
+      value: dummyUser.rating.toFixed(1),
+      icon: Star,
+      description: `${dummyUser.reviewCount} reviews`
     },
     {
       title: 'Member Since',
       value: new Date(dummyUser.joinedDate).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }),
       icon: Calendar,
-      description: 'Join date'
+      description: dummyUser.role.charAt(0).toUpperCase() + dummyUser.role.slice(1)
     }
   ];
 
   return (
     <Layout>
-      <div className="container mx-auto px-4 py-6 space-y-6">
+      <div className="container mx-auto px-4 py-6 space-y-6 max-w-7xl">
         {/* Profile Header */}
         <Card className="shadow-medium">
           <CardContent className="p-6">
@@ -46,7 +54,15 @@ const Dashboard = () => {
               <div className="flex-1">
                 <h1 className="text-2xl font-bold mb-1">{dummyUser.name}</h1>
                 <p className="text-muted-foreground mb-2">{dummyUser.email}</p>
-                <Badge variant="outline">{dummyUser.campus}</Badge>
+                <div className="flex items-center gap-2 mb-2">
+                  <Badge variant="outline">{dummyUser.campus}</Badge>
+                  <Badge variant="secondary">{dummyUser.role}</Badge>
+                </div>
+                <div className="flex items-center gap-1">
+                  <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                  <span className="font-medium">{dummyUser.rating}</span>
+                  <span className="text-muted-foreground">({dummyUser.reviewCount} reviews)</span>
+                </div>
               </div>
               
               <Button variant="outline">
@@ -58,7 +74,7 @@ const Dashboard = () => {
         </Card>
 
         {/* Stats */}
-        <div className="grid md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           {stats.map((stat, index) => (
             <Card key={index}>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -99,16 +115,16 @@ const Dashboard = () => {
               </Button>
               
               <Button asChild variant="outline" className="h-auto p-4 flex-col">
-                <Link to="/purchases">
-                  <ShoppingBag className="h-6 w-6 mb-2" />
-                  <span className="text-sm">Purchases</span>
+                <Link to="/wishlist">
+                  <Heart className="h-6 w-6 mb-2" />
+                  <span className="text-sm">Wishlist</span>
                 </Link>
               </Button>
               
               <Button asChild variant="outline" className="h-auto p-4 flex-col">
-                <Link to="/products">
-                  <Package className="h-6 w-6 mb-2" />
-                  <span className="text-sm">Browse</span>
+                <Link to="/messages">
+                  <MessageCircle className="h-6 w-6 mb-2" />
+                  <span className="text-sm">Messages</span>
                 </Link>
               </Button>
             </div>
@@ -116,7 +132,7 @@ const Dashboard = () => {
         </Card>
 
         {/* Recent Activity */}
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid lg:grid-cols-2 gap-6">
           {/* Recent Listings */}
           <Card>
             <CardHeader>
@@ -137,7 +153,7 @@ const Dashboard = () => {
                   />
                   <div className="flex-1 min-w-0">
                     <p className="font-medium truncate">{item.title}</p>
-                    <p className="text-sm text-muted-foreground">${item.price}</p>
+                    <p className="text-sm text-muted-foreground">₹{item.price}</p>
                   </div>
                   <Badge variant="secondary" className="text-xs">
                     {item.condition}
@@ -147,38 +163,39 @@ const Dashboard = () => {
             </CardContent>
           </Card>
 
-          {/* Recent Purchases */}
+          {/* Recent Messages */}
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center justify-between">
-                Recent Purchases
-                <Link to="/purchases" className="text-sm text-primary hover:underline">
+                Recent Messages
+                <Link to="/messages" className="text-sm text-primary hover:underline">
                   View all
                 </Link>
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
-              {dummyPurchases.slice(0, 2).map((purchase) => (
-                <div key={purchase.id} className="flex items-center space-x-3">
+              {dummyChatThreads.slice(0, 2).map((thread) => (
+                <div key={thread.id} className="flex items-center space-x-3">
                   <img
-                    src={purchase.product.image}
-                    alt={purchase.product.title}
+                    src={thread.product.image}
+                    alt={thread.product.title}
                     className="w-12 h-12 object-cover rounded-lg"
                   />
                   <div className="flex-1 min-w-0">
-                    <p className="font-medium truncate">{purchase.product.title}</p>
-                    <p className="text-sm text-muted-foreground">
-                      {new Date(purchase.purchaseDate).toLocaleDateString()}
+                    <p className="font-medium truncate">{thread.sellerName}</p>
+                    <p className="text-sm text-muted-foreground truncate">
+                      {thread.lastMessage}
                     </p>
                   </div>
                   <div className="text-right">
-                    <p className="font-medium">${purchase.amount}</p>
-                    <Badge 
-                      variant={purchase.status === 'completed' ? 'default' : 'secondary'}
-                      className="text-xs"
-                    >
-                      {purchase.status}
-                    </Badge>
+                    <p className="text-xs text-muted-foreground">
+                      {new Date(thread.lastMessageTime).toLocaleDateString()}
+                    </p>
+                    {thread.unreadCount > 0 && (
+                      <Badge variant="default" className="text-xs mt-1">
+                        {thread.unreadCount}
+                      </Badge>
+                    )}
                   </div>
                 </div>
               ))}

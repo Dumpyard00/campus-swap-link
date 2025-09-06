@@ -35,7 +35,7 @@ export const ProductCard = ({ product, showActions, onEdit, onDelete }: ProductC
             
             <div className="flex items-center justify-between">
               <p className="text-lg font-bold text-primary">
-                ${product.price}
+                ₹{product.price}
               </p>
               <p className="text-xs text-muted-foreground">
                 {product.category}
