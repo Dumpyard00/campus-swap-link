@@ -11,12 +11,17 @@ All colors MUST be HSL.
     scroll-behavior: smooth;
     height: -webkit-fill-available;
     -webkit-tap-highlight-color: transparent;
+    font-size: 16px; /* Better base font size for accessibility */
   }
 
   body {
     height: -webkit-fill-available;
     touch-action: manipulation;
     overscroll-behavior-y: none;
+    font-feature-settings: "rlig" 1, "calt" 1; /* Better text rendering */
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   /* Improve input fields on iOS */
@@ -24,12 +29,25 @@ All colors MUST be HSL.
   textarea {
     -webkit-appearance: none;
     appearance: none;
+    font-size: 16px; /* Prevent zoom on iOS */
+  }
+
+  /* Better focus management */
+  *:focus {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+  }
+
+  /* Improved text selection */
+  ::selection {
+    background-color: hsl(var(--primary) / 0.2);
+    color: hsl(var(--primary-foreground));
   }
 }
 
 @layer components {
 
-  /* Focus states for better accessibility */
+  /* Enhanced focus states for better accessibility */
   .focus-ring {
     @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background;
   }
@@ -39,14 +57,26 @@ All colors MUST be HSL.
     @apply active:opacity-80 active:scale-[0.98] transition-all duration-75;
   }
 
-  /* Touch friendly button with feedback */
+  /* Touch friendly button with feedback - improved for better mobile UX */
   .touch-feedback {
     @apply active:opacity-80 active:scale-[0.97] transition-all duration-100;
+    min-height: 44px; /* iOS recommended touch target size */
+    min-width: 44px;
   }
 
-  /* Accessibility enhancements */
+  /* Enhanced accessibility utilities */
   .sr-only {
     @apply absolute w-px h-px p-0 -m-px overflow-hidden border-0 whitespace-nowrap;
+  }
+
+  /* Skip link for keyboard navigation */
+  .skip-link {
+    @apply sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-primary-foreground focus:rounded-md;
+  }
+
+  /* Better touch targets for mobile */
+  .touch-target {
+    @apply min-h-[44px] min-w-[44px] flex items-center justify-center;
   }
 
   /* Card hover effect */
@@ -72,50 +102,99 @@ All colors MUST be HSL.
   .category-pill {
     @apply px-3 py-1.5 rounded-full text-sm font-medium transition-colors;
   }
+
+  /* Enhanced spacing utilities */
+  .space-section {
+    @apply py-12 md:py-16 lg:py-20;
+  }
+
+  .space-content {
+    @apply py-6 md:py-8 lg:py-10;
+  }
+
+  .space-tight {
+    @apply py-4 md:py-6 lg:py-8;
+  }
+
+  /* Better typography scale */
+  .text-display {
+    @apply text-4xl md:text-5xl lg:text-6xl font-bold leading-tight tracking-tight;
+  }
+
+  .text-heading {
+    @apply text-2xl md:text-3xl lg:text-4xl font-bold leading-tight;
+  }
+
+  .text-subheading {
+    @apply text-xl md:text-2xl font-semibold leading-snug;
+  }
+
+  .text-body {
+    @apply text-base md:text-lg leading-relaxed;
+  }
+
+  .text-caption {
+    @apply text-sm md:text-base text-muted-foreground;
+  }
+
+  /* Enhanced container utilities */
+  .container-responsive {
+    @apply container mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .container-narrow {
+    @apply max-w-2xl mx-auto px-4 sm:px-6;
+  }
+
+  .container-wide {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
 }
 
 @layer base {
   :root {
-    /* CampusDeals Design System - Refined color palette */
-    --background: 210 40% 98%;
-    --foreground: 222 47% 12%;
+    /* CampusDeals Design System - Enhanced color palette with better contrast */
+    --background: 0 0% 100%;
+    --foreground: 222 84% 5%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222 47% 12%;
+    --card-foreground: 222 84% 5%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222 47% 12%;
+    --popover-foreground: 222 84% 5%;
 
-    /* Primary: Teal - More vibrant and accessible */
-    --primary: 174 69% 34%;
+    /* Primary: Enhanced teal with better contrast */
+    --primary: 173 80% 40%;
     --primary-foreground: 0 0% 100%;
 
-    /* Secondary: Deep orange - Good contrast with primary */
-    --secondary: 20 91% 48%;
+    /* Secondary: Refined orange with better accessibility */
+    --secondary: 24 95% 53%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 210 20% 94%;
-    --muted-foreground: 215 25% 40%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 47%;
 
-    --accent: 210 30% 95%;
-    --accent-foreground: 222 47% 12%;
+    --accent: 210 40% 96%;
+    --accent-foreground: 222 84% 5%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
     --border: 214 32% 91%;
     --input: 214 32% 91%;
-    --ring: 174 69% 34%;
+    --ring: 173 80% 40%;
 
     /* Custom design tokens */
     --success: 142 76% 36%;
     --warning: 38 92% 50%;
 
-    /* Enhanced color palette */
-    --primary-light: 174 69% 94%;
-    --secondary-light: 20 91% 95%;
+    /* Enhanced color palette with better accessibility */
+    --primary-light: 173 80% 95%;
+    --secondary-light: 24 95% 95%;
     --tertiary: 250 95% 65%;
-    --surface: 210 40% 98%;
+    --surface: 0 0% 100%;
+    --surface-elevated: 0 0% 100%;
+    --surface-subtle: 210 40% 98%;
 
     /* Shadows - More refined with better depth perception */
     --shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.05);
@@ -139,7 +218,7 @@ All colors MUST be HSL.
   }
 
   .dark {
-    --background: 222 47% 6%;
+    --background: 222 84% 5%;
     --foreground: 210 40% 98%;
 
     --card: 222 47% 8%;
@@ -148,10 +227,10 @@ All colors MUST be HSL.
     --popover: 222 47% 8%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 174 69% 46%;
+    --primary: 173 80% 50%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 20 91% 58%;
+    --secondary: 24 95% 60%;
     --secondary-foreground: 0 0% 100%;
 
     --muted: 217 33% 18%;
@@ -165,7 +244,7 @@ All colors MUST be HSL.
 
     --border: 217 33% 18%;
     --input: 217 33% 18%;
-    --ring: 174 69% 46%;
+    --ring: 173 80% 50%;
 
     --sidebar-background: 222 47% 8%;
     --sidebar-foreground: 210 40% 98%;

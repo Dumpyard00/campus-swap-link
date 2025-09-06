@@ -53,7 +53,7 @@ const Products = () => {
 
   return (
     <Layout showSearch={true}>
-      <div ref={containerRef} className="container mx-auto px-4 py-6 space-y-7 max-w-6xl overflow-auto min-h-[calc(100vh-3.5rem)]">
+      <div ref={containerRef} className="container-responsive space-y-6 md:space-y-7 max-w-6xl overflow-auto min-h-[calc(100vh-3.5rem)]">
         {isMobile && (
           <RefreshIndicator
             pullDistance={pullDistance}
@@ -66,21 +66,22 @@ const Products = () => {
         <div className="relative md:hidden">
           <div className="flex gap-3">
             <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" aria-hidden="true" />
               <Input
                 placeholder="Search for textbooks, electronics..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 pr-8 h-11 rounded-lg shadow-soft"
+                className="pl-10 pr-8 h-11 rounded-lg shadow-soft focus-ring"
                 aria-label="Search products"
+                role="searchbox"
               />
               {searchQuery && (
                 <button
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 touch-feedback"
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 touch-feedback focus-ring rounded-md"
                   onClick={() => setSearchQuery('')}
                   aria-label="Clear search"
                 >
-                  <X className="h-4 w-4 text-muted-foreground" />
+                  <X className="h-4 w-4 text-muted-foreground" aria-hidden="true" />
                 </button>
               )}
             </div>
@@ -88,12 +89,12 @@ const Products = () => {
               variant="outline"
               size="icon"
               onClick={() => setShowFilters(!showFilters)}
-              className={cn("h-11 w-11 rounded-lg shadow-soft",
+              className={cn("h-11 w-11 rounded-lg shadow-soft touch-target focus-ring",
                 showFilters && "bg-primary/10 border-primary/20")}
               aria-label="Toggle filters"
               aria-expanded={showFilters}
             >
-              <SlidersHorizontal className="h-4 w-4" />
+              <SlidersHorizontal className="h-4 w-4" aria-hidden="true" />
             </Button>
           </div>
         </div>
@@ -102,16 +103,18 @@ const Products = () => {
         <div className={cn("space-y-4", isMobile && !showFilters && "hidden")}>
           <div className="flex items-center justify-between">
             <h2 className="font-semibold text-xl">Categories</h2>
-            <p className="text-sm text-muted-foreground hidden md:block">
+            <p className="text-sm text-muted-foreground hidden md:block" aria-live="polite">
               {!isLoading && `${filteredProducts.length} item${filteredProducts.length !== 1 ? 's' : ''} found`}
             </p>
           </div>
-          <div className="flex gap-2.5 overflow-x-auto pb-3 md:flex-wrap scrollbar-hide">
+          <div className="flex gap-2.5 overflow-x-auto pb-3 md:flex-wrap scrollbar-hide" role="tablist" aria-label="Product categories">
             <CategoryButton
               active={!selectedCategory}
               onClick={() => setSelectedCategory('')}
-              className="px-5 py-2 rounded-lg shadow-soft"
+              className="px-5 py-2 rounded-lg shadow-soft touch-target focus-ring"
               aria-pressed={!selectedCategory}
+              role="tab"
+              aria-selected={!selectedCategory}
             >
               All
             </CategoryButton>
@@ -120,8 +123,10 @@ const Products = () => {
                 key={category}
                 active={selectedCategory === category}
                 onClick={() => setSelectedCategory(category)}
-                className="whitespace-nowrap px-5 py-2 rounded-lg shadow-soft"
+                className="whitespace-nowrap px-5 py-2 rounded-lg shadow-soft touch-target focus-ring"
                 aria-pressed={selectedCategory === category}
+                role="tab"
+                aria-selected={selectedCategory === category}
               >
                 {category}
               </CategoryButton>
@@ -135,7 +140,7 @@ const Products = () => {
             <h2 className="font-semibold text-xl text-primary">
               {selectedCategory ? `${selectedCategory} Items` : 'All Items'}
             </h2>
-            <p className="text-sm text-muted-foreground md:hidden bg-muted/50 px-3 py-1 rounded-full">
+            <p className="text-sm text-muted-foreground md:hidden bg-muted/50 px-3 py-1 rounded-full" aria-live="polite">
               {!isLoading && `${filteredProducts.length} item${filteredProducts.length !== 1 ? 's' : ''}`}
             </p>
           </div>
@@ -146,13 +151,17 @@ const Products = () => {
             <div className="text-center py-16 bg-muted/30 rounded-xl shadow-soft">
               <p className="text-muted-foreground mb-6">No items found matching your criteria</p>
               <Link to="/products/new">
-                <CategoryButton className="bg-primary text-primary-foreground hover:bg-primary/90 px-6 py-2.5">
+                <CategoryButton className="bg-primary text-primary-foreground hover:bg-primary/90 px-6 py-2.5 touch-target focus-ring">
                   Be the first to list something!
                 </CategoryButton>
               </Link>
             </div>
           ) : (
-            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-4 md:gap-5 lg:gap-6">
+            <div 
+              className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-4 md:gap-5 lg:gap-6"
+              role="grid"
+              aria-label="Product listings"
+            >
               {filteredProducts.map((product) => (
                 <ProductCard key={product.id} product={product} />
               ))}

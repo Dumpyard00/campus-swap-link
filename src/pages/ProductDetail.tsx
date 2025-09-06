@@ -72,14 +72,15 @@ const ProductDetail = () => {
 
   return (
     <Layout showBottomNav={false}>
-      <div className="container mx-auto px-4 py-6 max-w-6xl">
+      <div className="container-responsive space-y-6 max-w-6xl">
         {/* Back Button */}
         <Button
           variant="ghost"
           onClick={() => navigate(-1)}
-          className="mb-6 -ml-2"
+          className="mb-6 -ml-2 touch-target focus-ring"
+          aria-label="Go back to previous page"
         >
-          <ArrowLeft className="h-4 w-4 mr-2" />
+          <ArrowLeft className="h-4 w-4 mr-2" aria-hidden="true" />
           Back
         </Button>
 
@@ -89,7 +90,7 @@ const ProductDetail = () => {
             {/* Use our new ImageCarousel component */}
             <ImageCarousel
               images={[product.image, ...Array(3).fill(product.image)]}
-              alt={product.title}
+              alt={`${product.title} - Product images`}
               className="aspect-square rounded-lg"
             />
           </div>
@@ -106,43 +107,48 @@ const ProductDetail = () => {
                     variant="outline"
                     size="sm"
                     onClick={() => setShowShareOptions(!showShareOptions)}
-                    className="rounded-full h-10 w-10 p-0"
+                    className="rounded-full h-10 w-10 p-0 touch-target focus-ring"
+                    aria-label="Share this product"
+                    aria-expanded={showShareOptions}
                   >
-                    <Share2 className="h-5 w-5" />
+                    <Share2 className="h-5 w-5" aria-hidden="true" />
                   </Button>
                   <Button
                     variant="outline"
                     size="sm"
                     onClick={handleWishlist}
-                    className="rounded-full h-10 w-10 p-0"
+                    className="rounded-full h-10 w-10 p-0 touch-target focus-ring"
+                    aria-label={isWishlisted ? `Remove ${product.title} from wishlist` : `Add ${product.title} to wishlist`}
+                    aria-pressed={isWishlisted}
                   >
                     <Heart
                       className={cn(
                         "h-5 w-5 transition-colors",
                         isWishlisted && "fill-primary text-primary"
                       )}
+                      aria-hidden="true"
                     />
                   </Button>
                 </div>
               </div>
 
               {showShareOptions && (
-                <div className="bg-muted/20 p-3 rounded-lg mb-3 animate-in fade-in slide-in-from-top-5 duration-200">
+                <div className="bg-muted/20 p-3 rounded-lg mb-3 animate-in fade-in slide-in-from-top-5 duration-200" role="region" aria-label="Share options">
                   <p className="text-sm mb-2">Share this product</p>
                   <div className="flex gap-2">
-                    <Button size="sm" variant="secondary" className="h-9">Copy Link</Button>
-                    <Button size="sm" variant="secondary" className="h-9">WhatsApp</Button>
-                    <Button size="sm" variant="secondary" className="h-9">Email</Button>
+                    <Button size="sm" variant="secondary" className="h-9 touch-target focus-ring" aria-label="Copy product link">Copy Link</Button>
+                    <Button size="sm" variant="secondary" className="h-9 touch-target focus-ring" aria-label="Share via WhatsApp">WhatsApp</Button>
+                    <Button size="sm" variant="secondary" className="h-9 touch-target focus-ring" aria-label="Share via email">Email</Button>
                   </div>
                 </div>
               )}
 
               <div className="flex items-center gap-2 mb-4">
-                <Badge variant="secondary">{product.category}</Badge>
-                <Badge variant="outline">{product.condition}</Badge>
+                <Badge variant="secondary" aria-label={`Category: ${product.category}`}>{product.category}</Badge>
+                <Badge variant="outline" aria-label={`Condition: ${product.condition}`}>{product.condition}</Badge>
               </div>
 
-              <p className="text-3xl font-bold text-primary mb-4">
+              <p className="text-3xl font-bold text-primary mb-4" aria-label={`Price: ₹${product.price}`}>
                 ₹{product.price}
               </p>
             </div>
@@ -193,18 +199,20 @@ const ProductDetail = () => {
               <Button
                 onClick={handleContact}
                 variant="outline"
-                className="flex items-center gap-2 h-12 lg:text-base"
+                className="flex items-center gap-2 h-12 lg:text-base touch-target focus-ring"
                 size="lg"
+                aria-label="Send message to seller"
               >
-                <MessageCircle className="h-4 w-4 lg:h-5 lg:w-5" />
+                <MessageCircle className="h-4 w-4 lg:h-5 lg:w-5" aria-hidden="true" />
                 Message
               </Button>
               <Button
                 onClick={handleCall}
-                className="bg-primary-solid text-primary-foreground hover:bg-primary-light flex items-center gap-2 h-12 lg:text-base"
+                className="bg-primary-solid text-primary-foreground hover:bg-primary-light flex items-center gap-2 h-12 lg:text-base touch-target focus-ring"
                 size="lg"
+                aria-label="Call seller"
               >
-                <Phone className="h-4 w-4 lg:h-5 lg:w-5" />
+                <Phone className="h-4 w-4 lg:h-5 lg:w-5" aria-hidden="true" />
                 Call Seller
               </Button>
             </div>

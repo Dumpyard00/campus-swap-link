@@ -25,36 +25,41 @@ const Auth = () => {
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <div className="w-full max-w-md">
+        {/* Skip link for accessibility */}
+        <a href="#main-content" className="skip-link">
+          Skip to main content
+        </a>
+        
         {/* Logo */}
         <div className="text-center mb-8">
-          <Link to="/" className="inline-flex items-center space-x-2 mb-4">
-            <div className="w-12 h-12 rounded-lg gradient-primary flex items-center justify-center">
+          <Link to="/" className="inline-flex items-center space-x-2 mb-4 focus-ring rounded-md p-1 -m-1" aria-label="CampusDeals home">
+            <div className="w-12 h-12 rounded-lg gradient-primary flex items-center justify-center shadow-sm">
               <span className="text-primary-foreground font-bold">CD</span>
             </div>
             <span className="font-bold text-2xl">CampusDeals</span>
           </Link>
-          <p className="text-muted-foreground">
+          <p className="text-muted-foreground text-body">
             Your campus marketplace awaits
           </p>
         </div>
 
-        <Card className="shadow-medium">
+        <Card className="shadow-medium" id="main-content">
           <CardHeader className="text-center pb-4">
             <CardTitle className="text-2xl">Welcome Back</CardTitle>
-            <CardDescription>
+            <CardDescription className="text-body">
               Sign in to your account or create a new one
             </CardDescription>
           </CardHeader>
           
           <CardContent>
             <Tabs defaultValue="signin" className="w-full">
-              <TabsList className="grid w-full grid-cols-2 mb-6">
-                <TabsTrigger value="signin">Sign In</TabsTrigger>
-                <TabsTrigger value="signup">Sign Up</TabsTrigger>
+              <TabsList className="grid w-full grid-cols-2 mb-6" role="tablist">
+                <TabsTrigger value="signin" role="tab" aria-selected="true">Sign In</TabsTrigger>
+                <TabsTrigger value="signup" role="tab" aria-selected="false">Sign Up</TabsTrigger>
               </TabsList>
               
-              <TabsContent value="signin">
-                <form onSubmit={handleSubmit} className="space-y-4">
+              <TabsContent value="signin" role="tabpanel" aria-labelledby="signin-tab">
+                <form onSubmit={handleSubmit} className="space-y-4" aria-label="Sign in form">
                   <div className="space-y-2">
                     <Label htmlFor="email">Email</Label>
                     <Input
@@ -62,7 +67,10 @@ const Auth = () => {
                       type="email"
                       placeholder="Enter your university email"
                       required
+                      className="focus-ring"
+                      aria-describedby="email-help"
                     />
+                    <p id="email-help" className="text-xs text-muted-foreground">Use your university email address</p>
                   </div>
                   
                   <div className="space-y-2">
@@ -72,16 +80,23 @@ const Auth = () => {
                       type="password"
                       placeholder="Enter your password"
                       required
+                      className="focus-ring"
+                      aria-describedby="password-help"
                     />
+                    <p id="password-help" className="text-xs text-muted-foreground">Enter your account password</p>
                   </div>
                   
                   <HeroButton 
                     type="submit" 
-                    className="w-full"
+                    className="w-full touch-target focus-ring"
                     disabled={isLoading}
+                    aria-describedby="signin-status"
                   >
                     {isLoading ? 'Signing In...' : 'Sign In'}
                   </HeroButton>
+                  <div id="signin-status" className="sr-only" aria-live="polite">
+                    {isLoading ? 'Signing in...' : 'Ready to sign in'}
+                  </div>
                 </form>
               </TabsContent>
               

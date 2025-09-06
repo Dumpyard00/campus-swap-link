@@ -60,14 +60,23 @@ export const Layout = ({
 
   return (
     <div className="min-h-screen bg-background">
+      {/* Skip link for accessibility */}
+      <a href="#main-content" className="skip-link">
+        Skip to main content
+      </a>
+      
       {showHeader && (
         <header className={cn(
           "sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80",
           isScrolled ? "shadow-sm" : ""
-        )}>
-          <div className="container flex h-14 items-center justify-between px-4">
+        )} role="banner">
+          <div className="container-responsive flex h-14 items-center justify-between">
             <div className="flex items-center">
-              <Link to="/" className="flex items-center space-x-2.5 mr-6">
+              <Link 
+                to="/" 
+                className="flex items-center space-x-2.5 mr-6 focus-ring rounded-md p-1 -m-1"
+                aria-label="CampusDeals home"
+              >
                 <div className="w-8 h-8 rounded-lg bg-primary-gradient flex items-center justify-center shadow-sm">
                   <span className="text-primary-foreground font-bold text-sm">CD</span>
                 </div>
@@ -75,31 +84,49 @@ export const Layout = ({
               </Link>
 
               {!isMobile && (
-                <div className="hidden lg:flex items-center space-x-5">
-                  <Link to="/products" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Browse</Link>
-                  <Link to="/products/new" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Sell</Link>
-                </div>
+                <nav className="hidden lg:flex items-center space-x-5" role="navigation" aria-label="Main navigation">
+                  <Link 
+                    to="/products" 
+                    className="text-sm text-muted-foreground hover:text-foreground transition-colors focus-ring rounded-md px-2 py-1"
+                    aria-label="Browse products"
+                  >
+                    Browse
+                  </Link>
+                  <Link 
+                    to="/products/new" 
+                    className="text-sm text-muted-foreground hover:text-foreground transition-colors focus-ring rounded-md px-2 py-1"
+                    aria-label="Sell an item"
+                  >
+                    Sell
+                  </Link>
+                </nav>
               )}
             </div>
 
             {showSearch && !isMobile && (
               <div className="relative mx-4 flex-1 max-w-md hidden md:block">
                 <div className="relative group">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4 group-focus-within:text-primary transition-colors" />
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4 group-focus-within:text-primary transition-colors" aria-hidden="true" />
                   <Input
                     placeholder="Search for textbooks, electronics, furniture..."
                     className="pl-10 h-9 rounded-lg border-input bg-muted/30 focus:bg-background transition-colors"
                     aria-label="Search products"
+                    role="searchbox"
                   />
                 </div>
               </div>
             )}
 
             <div className="flex items-center space-x-3">
-              <Button variant="ghost" size="sm" asChild className="rounded-full h-9 w-9 p-0 lg:w-auto lg:px-3">
-                <Link to="/dashboard" aria-label="Profile" className="flex items-center gap-2">
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                asChild 
+                className="rounded-full h-9 w-9 p-0 lg:w-auto lg:px-3 touch-target"
+              >
+                <Link to="/dashboard" aria-label="Go to your account dashboard" className="flex items-center gap-2">
                   <div className="flex items-center justify-center h-5 w-5 rounded-full bg-primary/10">
-                    <User className="h-3 w-3 text-primary" />
+                    <User className="h-3 w-3 text-primary" aria-hidden="true" />
                   </div>
                   <span className="hidden lg:inline text-sm font-medium">Account</span>
                 </Link>
@@ -113,17 +140,26 @@ export const Layout = ({
         {/* Desktop Sidebar */}
         {showHeader && !isMobile && <DesktopSidebar />}
 
-        <main className={cn(
-          "flex-1 transition-all duration-300",
-          showBottomNav && "pb-16 lg:pb-0",
-          !isMobile && "px-5 py-5 lg:px-8"
-        )}>
+        <main 
+          id="main-content"
+          className={cn(
+            "flex-1 transition-all duration-300",
+            showBottomNav && "pb-16 lg:pb-0",
+            !isMobile && "px-5 py-5 lg:px-8"
+          )}
+          role="main"
+          aria-label="Main content"
+        >
           {children}
         </main>
       </div>
 
       {showBottomNav && isMobile && (
-        <nav className="fixed bottom-0 left-0 right-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 border-t md:hidden shadow-medium">
+        <nav 
+          className="fixed bottom-0 left-0 right-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 border-t md:hidden shadow-medium"
+          role="navigation"
+          aria-label="Mobile navigation"
+        >
           <div className="grid h-16 max-w-lg mx-auto grid-cols-6">
             {navItems.map(({ icon: Icon, label, path }) => {
               const isActive = location.pathname === path;
@@ -132,7 +168,7 @@ export const Layout = ({
                   key={path}
                   to={path}
                   className={cn(
-                    "inline-flex flex-col items-center justify-center px-2 py-2 text-xs transition-smooth touch-feedback",
+                    "inline-flex flex-col items-center justify-center px-2 py-2 text-xs transition-smooth touch-feedback focus-ring rounded-md",
                     isActive
                       ? "text-primary"
                       : "text-muted-foreground hover:text-foreground"
@@ -141,13 +177,16 @@ export const Layout = ({
                   aria-label={label}
                 >
                   <div className={cn(
-                    "flex items-center justify-center w-10 h-10 rounded-full",
+                    "flex items-center justify-center w-10 h-10 rounded-full transition-colors",
                     isActive ? "bg-primary/10" : "bg-transparent"
                   )}>
-                    <Icon className={cn(
-                      "h-5 w-5",
-                      isActive ? "text-primary" : "text-muted-foreground"
-                    )} />
+                    <Icon 
+                      className={cn(
+                        "h-5 w-5",
+                        isActive ? "text-primary" : "text-muted-foreground"
+                      )} 
+                      aria-hidden="true"
+                    />
                   </div>
                   <span className={cn("text-xs mt-0.5", isActive && "font-medium")}>{label}</span>
                 </Link>
