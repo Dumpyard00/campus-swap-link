@@ -53,7 +53,7 @@ const Products = () => {
 
   return (
     <Layout showSearch={true}>
-      <div ref={containerRef} className="container-responsive space-y-6 md:space-y-7 max-w-6xl overflow-auto min-h-[calc(100vh-3.5rem)]">
+      <div ref={containerRef} className="container-responsive space-y-4 sm:space-y-6 md:space-y-7 max-w-6xl overflow-auto min-h-[calc(100vh-3.5rem)]">
         {isMobile && (
           <RefreshIndicator
             pullDistance={pullDistance}
@@ -64,14 +64,14 @@ const Products = () => {
         )}
         {/* Mobile Search Bar */}
         <div className="relative md:hidden">
-          <div className="flex gap-3">
+          <div className="flex gap-2 sm:gap-3">
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" aria-hidden="true" />
               <Input
                 placeholder="Search for textbooks, electronics..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 pr-8 h-11 rounded-lg shadow-soft focus-ring"
+                className="pl-10 pr-8 h-10 sm:h-11 rounded-lg shadow-soft focus-ring input-enhanced"
                 aria-label="Search products"
                 role="searchbox"
               />
@@ -157,13 +157,19 @@ const Products = () => {
               </Link>
             </div>
           ) : (
-            <div 
-              className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-4 md:gap-5 lg:gap-6"
+            <div
+              className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3 sm:gap-4 md:gap-5 lg:gap-6"
               role="grid"
               aria-label="Product listings"
             >
-              {filteredProducts.map((product) => (
-                <ProductCard key={product.id} product={product} />
+              {filteredProducts.map((product, index) => (
+                <div
+                  key={product.id}
+                  className="animate-fade-in-up"
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
+                  <ProductCard product={product} />
+                </div>
               ))}
             </div>
           )}

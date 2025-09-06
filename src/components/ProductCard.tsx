@@ -1,6 +1,7 @@
 import { Product } from '@/lib/dummy-data';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { Link, useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { Heart } from 'lucide-react';
@@ -29,7 +30,7 @@ export const ProductCard = ({ product, showActions, onEdit, onDelete }: ProductC
   };
 
   return (
-    <Card className="overflow-hidden transition-smooth cursor-pointer group h-full flex flex-col border shadow-soft hover:shadow-medium hover:border-primary/20 focus-within:ring-2 focus-within:ring-primary/20">
+    <Card className="overflow-hidden transition-smooth cursor-pointer group h-full flex flex-col border shadow-soft hover:shadow-medium hover:border-primary/20 focus-within:ring-2 focus-within:ring-primary/20 card-interactive">
       <DoubleTap onDoubleTap={handleDoubleTap} className="aspect-square overflow-hidden relative bg-muted/50">
         <img
           src={product.image}
@@ -46,17 +47,17 @@ export const ProductCard = ({ product, showActions, onEdit, onDelete }: ProductC
           }}
         />
         <div className={cn("absolute inset-0 flex items-center justify-center", isImageLoaded && "hidden")}>
-          <div className="w-10 h-10 rounded-lg bg-primary/10 animate-pulse" aria-hidden="true"></div>
+          <div className="w-10 h-10 rounded-lg bg-primary/10 loading-shimmer" aria-hidden="true"></div>
         </div>
         <Badge
           variant="secondary"
-          className="absolute top-3 right-3 text-xs px-2.5 py-0.5 font-medium rounded-md shadow-soft"
+          className="absolute top-2 sm:top-3 right-2 sm:right-3 text-xs px-2 py-0.5 sm:px-2.5 sm:py-0.5 font-medium rounded-md shadow-soft backdrop-blur-subtle"
           aria-label={`Condition: ${product.condition}`}
         >
           {product.condition}
         </Badge>
         <button
-          className="absolute top-3 left-3 p-2 rounded-full bg-background/90 backdrop-blur-sm shadow-soft hover:opacity-100 transition-opacity hover:bg-background touch-feedback focus-ring"
+          className="absolute top-2 sm:top-3 left-2 sm:left-3 p-1.5 sm:p-2 rounded-full bg-background/90 backdrop-blur-sm shadow-soft hover:opacity-100 transition-opacity hover:bg-background touch-feedback focus-ring"
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
@@ -67,7 +68,7 @@ export const ProductCard = ({ product, showActions, onEdit, onDelete }: ProductC
         >
           <Heart
             className={cn(
-              "h-4 w-4 transition-colors",
+              "h-3.5 w-3.5 sm:h-4 sm:w-4 transition-colors",
               isWishlisted ? "text-secondary fill-secondary" : "text-muted-foreground hover:text-secondary"
             )}
             aria-hidden="true"
@@ -75,8 +76,8 @@ export const ProductCard = ({ product, showActions, onEdit, onDelete }: ProductC
         </button>
       </DoubleTap>
 
-      <CardContent className="p-4 sm:p-5 flex-1 flex flex-col">
-        <div className="space-y-3 flex-1">
+      <CardContent className="p-3 sm:p-4 md:p-5 flex-1 flex flex-col">
+        <div className="space-y-2 sm:space-y-3 flex-1">
           <h3 className="font-medium line-clamp-2 text-sm md:text-base leading-tight group-hover:text-primary transition-colors">
             <a
               href={`/products/${product.id}`}
@@ -88,14 +89,24 @@ export const ProductCard = ({ product, showActions, onEdit, onDelete }: ProductC
           </h3>
 
           <div className="flex items-center justify-between">
-            <p className="text-base sm:text-lg font-bold text-primary" aria-label={`Price: ₹${product.price}`}>
+            <p className="text-base sm:text-lg md:text-xl font-bold text-primary" aria-label={`Price: ₹${product.price}`}>
               ₹{product.price}
             </p>
             <span
-              className="text-xs px-2.5 py-0.5 bg-accent rounded-full text-accent-foreground font-medium"
+              className="text-xs px-2 py-0.5 sm:px-2.5 sm:py-0.5 bg-accent rounded-full text-accent-foreground font-medium"
               aria-label={`Category: ${product.category}`}
             >
               {product.category}
+            </span>
+          </div>
+
+          <p className="text-xs sm:text-sm text-muted-foreground line-clamp-2 leading-relaxed mb-2">
+            {product.description}
+          </p>
+
+          <div className="flex items-center gap-2 sm:gap-3 text-xs sm:text-sm text-muted-foreground mb-3">
+            <span className="flex items-center gap-1">
+              � <span>{new Date(product.createdAt).toLocaleDateString()}</span>
             </span>
           </div>
 
@@ -116,27 +127,31 @@ export const ProductCard = ({ product, showActions, onEdit, onDelete }: ProductC
         </div>
 
         {showActions && (
-          <div className="flex gap-3 mt-4">
-            <button
+          <div className="flex items-center gap-2 pt-3 sm:pt-4 border-t border-border/50 mt-3">
+            <Button
+              size="sm"
+              variant="outline"
+              className="flex-1 h-8 text-xs"
               onClick={(e) => {
-                e.preventDefault();
+                e.stopPropagation();
                 onEdit?.(product.id);
               }}
-              className="flex-1 px-3 py-2 text-xs bg-secondary text-secondary-foreground rounded-md shadow-soft hover:bg-secondary/90 transition-smooth touch-feedback"
               aria-label={`Edit ${product.title}`}
             >
               Edit
-            </button>
-            <button
+            </Button>
+            <Button
+              size="sm"
+              variant="destructive"
+              className="flex-1 h-8 text-xs"
               onClick={(e) => {
-                e.preventDefault();
+                e.stopPropagation();
                 onDelete?.(product.id);
               }}
-              className="flex-1 px-3 py-2 text-xs bg-destructive text-destructive-foreground rounded-md shadow-soft hover:bg-destructive/90 transition-smooth touch-feedback"
               aria-label={`Delete ${product.title}`}
             >
               Delete
-            </button>
+            </Button>
           </div>
         )}
       </CardContent>
