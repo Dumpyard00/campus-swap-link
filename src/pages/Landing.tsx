@@ -107,16 +107,18 @@ const Landing = () => {
         className="relative overflow-hidden py-20 px-4 md:py-28 lg:py-36 space-section"
         aria-labelledby="hero-heading"
       >
-        {/* Enhanced background with animated gradients */}
+        {/* Enhanced background with vibrant animated gradients */}
         <div className="absolute inset-0 -z-10">
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5"></div>
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-primary/10 via-transparent to-transparent"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/8 via-purple-500/5 via-pink-500/5 to-secondary/8"></div>
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-primary/12 via-purple-500/6 via-pink-500/6 to-transparent"></div>
+          <div className="absolute inset-0 bg-gradient-to-tl from-blue-500/4 via-transparent to-cyan-500/6"></div>
         </div>
 
-        {/* Animated decorative elements */}
-        <div className="absolute hidden md:block -top-24 right-10 w-72 h-72 bg-primary/5 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute hidden md:block bottom-12 -left-20 w-80 h-80 bg-secondary/5 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s'}}></div>
-        <div className="absolute hidden lg:block top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-primary/3 rounded-full blur-3xl animate-pulse" style={{animationDelay: '2s'}}></div>
+        {/* Animated decorative elements with vibrant colors */}
+        <div className="absolute hidden md:block -top-24 right-10 w-72 h-72 bg-gradient-to-br from-primary/8 to-purple-500/6 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute hidden md:block bottom-12 -left-20 w-80 h-80 bg-gradient-to-br from-secondary/8 to-pink-500/6 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s'}}></div>
+        <div className="absolute hidden lg:block top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-br from-cyan-500/6 via-primary/4 to-purple-500/6 rounded-full blur-3xl animate-pulse" style={{animationDelay: '2s'}}></div>
+        <div className="absolute hidden xl:block top-1/4 -right-32 w-64 h-64 bg-gradient-to-br from-pink-500/6 to-secondary/6 rounded-full blur-3xl animate-pulse" style={{animationDelay: '3s'}}></div>
 
         <div className="container-responsive text-center max-w-5xl">
           {/* Trust badge with enhanced animation */}
@@ -133,7 +135,7 @@ const Landing = () => {
             className={`text-display mb-6 transition-all duration-1000 delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
           >
             Your Campus
-            <span className="gradient-hero bg-clip-text text-transparent block sm:inline"> Marketplace</span>
+            <span className="bg-gradient-to-r from-primary via-secondary via-purple-500 via-pink-500 via-blue-500 via-cyan-500 to-primary bg-clip-text text-transparent animate-rainbow block sm:inline"> Marketplace</span>
           </h1>
 
           {/* Enhanced description */}
@@ -172,7 +174,7 @@ const Landing = () => {
       </section>
 
       {/* Features Section */}
-      <section className="py-20 px-4 bg-muted/30 space-section" aria-labelledby="features-heading">
+      <section className="py-20 px-4 bg-gradient-to-br from-muted/30 via-purple-50/20 via-pink-50/20 to-muted/30 space-section" aria-labelledby="features-heading">
         <div className="container-responsive max-w-6xl">
           <div className="text-center mb-16">
             <div className="inline-flex items-center justify-center text-xs font-semibold text-secondary uppercase tracking-wider mb-3">
@@ -196,8 +198,8 @@ const Landing = () => {
                 style={{transitionDelay: `${index * 100}ms`}}
               >
                 <CardContent className="p-6 pt-8">
-                  <div className={`w-16 h-16 rounded-full bg-gradient-to-r ${feature.color} flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:shadow-xl group-hover:scale-110 transition-all duration-300`}>
-                    <feature.icon className="h-7 w-7 text-white" aria-hidden="true" />
+                  <div className={`w-16 h-16 rounded-full bg-gradient-to-r ${feature.color} flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:shadow-xl group-hover:scale-110 transition-all duration-300 ring-2 ring-white/20 group-hover:ring-white/40`}>
+                    <feature.icon className="h-7 w-7 text-white drop-shadow-sm" aria-hidden="true" />
                   </div>
                   <h3 className="font-semibold text-lg mb-3 group-hover:text-primary transition-colors" id={`feature-${index}`}>
                     {feature.title}
@@ -213,7 +215,7 @@ const Landing = () => {
       </section>
 
       {/* How It Works Section */}
-      <section className="py-24 px-4 space-section" aria-labelledby="how-it-works-heading">
+      <section className="py-24 px-4 bg-gradient-to-br from-background via-blue-50/30 via-cyan-50/30 to-background space-section" aria-labelledby="how-it-works-heading">
         <div className="container-responsive max-w-6xl">
           <div className="text-center mb-16">
             <div className="inline-flex items-center justify-center text-xs font-semibold text-primary uppercase tracking-wider mb-3">
@@ -251,9 +253,9 @@ const Landing = () => {
               }
             ].map((step, index) => (
               <div key={index} className="relative flex flex-col items-center text-center group">
-                <div className="w-20 h-20 rounded-full bg-gradient-to-r from-primary/10 to-primary/5 flex items-center justify-center mb-6 shadow-lg group-hover:shadow-xl group-hover:scale-105 transition-all duration-300 relative">
-                  <step.icon className="h-9 w-9 text-primary group-hover:text-primary/80 transition-colors" aria-hidden="true" />
-                  <div className="absolute -right-2 -top-2 bg-primary w-7 h-7 rounded-full text-white flex items-center justify-center font-bold text-sm shadow-lg">
+                <div className="w-20 h-20 rounded-full bg-gradient-to-r from-primary/15 via-purple-500/10 to-primary/10 flex items-center justify-center mb-6 shadow-lg group-hover:shadow-xl group-hover:scale-105 transition-all duration-300 relative ring-2 ring-primary/20 group-hover:ring-primary/40">
+                  <step.icon className="h-9 w-9 text-primary group-hover:text-primary/80 transition-colors drop-shadow-sm" aria-hidden="true" />
+                  <div className="absolute -right-2 -top-2 bg-gradient-to-r from-primary to-purple-500 w-7 h-7 rounded-full text-white flex items-center justify-center font-bold text-sm shadow-lg ring-2 ring-white/30">
                     {step.step}
                   </div>
                 </div>
@@ -266,7 +268,7 @@ const Landing = () => {
 
                 {/* Enhanced connector line */}
                 {index < 2 && (
-                  <div className="hidden md:block absolute top-12 left-[60%] w-full h-0.5 bg-gradient-to-r from-primary/20 to-primary/10 group-hover:from-primary/40 group-hover:to-primary/20 transition-all duration-300"></div>
+                  <div className="hidden md:block absolute top-12 left-[60%] w-full h-0.5 bg-gradient-to-r from-primary/30 via-purple-500/20 to-primary/20 group-hover:from-primary/50 group-hover:via-purple-500/30 group-hover:to-primary/30 transition-all duration-300"></div>
                 )}
               </div>
             ))}
@@ -275,7 +277,7 @@ const Landing = () => {
       </section>
 
       {/* Stats Section */}
-      <section className="py-20 px-4 bg-muted/10 space-section" aria-labelledby="stats-heading">
+      <section className="py-20 px-4 bg-gradient-to-br from-muted/10 via-purple-50/30 via-pink-50/30 to-muted/10 space-section" aria-labelledby="stats-heading">
         <div className="container-responsive max-w-6xl">
           <div className="text-center mb-12">
             <h2 id="stats-heading" className="text-heading mb-4">
@@ -294,8 +296,8 @@ const Landing = () => {
                 style={{transitionDelay: `${index * 100}ms`}}
               >
                 <div className="flex items-center justify-center mb-4">
-                  <div className={`w-12 h-12 rounded-full bg-gradient-to-r from-primary/10 to-primary/5 flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
-                    <stat.icon className={`h-6 w-6 ${stat.color}`} aria-hidden="true" />
+                  <div className={`w-12 h-12 rounded-full bg-gradient-to-r from-primary/15 via-purple-500/10 to-primary/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300 ring-2 ring-primary/20 group-hover:ring-primary/40`}>
+                    <stat.icon className={`h-6 w-6 ${stat.color} drop-shadow-sm`} aria-hidden="true" />
                   </div>
                 </div>
                 <div className={`text-4xl font-bold ${stat.color} mb-2 group-hover:scale-105 transition-transform duration-300`}>
@@ -311,7 +313,7 @@ const Landing = () => {
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-20 px-4 space-section" aria-labelledby="testimonials-heading">
+      <section className="py-20 px-4 bg-gradient-to-br from-background via-blue-50/20 via-cyan-50/20 to-background space-section" aria-labelledby="testimonials-heading">
         <div className="container-responsive max-w-6xl">
           <div className="text-center mb-12">
             <div className="inline-flex items-center justify-center text-xs font-semibold text-secondary uppercase tracking-wider mb-3">
@@ -354,16 +356,17 @@ const Landing = () => {
 
       {/* CTA Section */}
       <section className="py-20 px-4 relative overflow-hidden space-section" aria-labelledby="cta-heading">
-        {/* Enhanced background with animated elements */}
+        {/* Enhanced background with vibrant animated elements */}
         <div className="absolute inset-0 -z-10">
           <div className="absolute inset-0 gradient-hero"></div>
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-white/10 via-transparent to-transparent"></div>
-          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-primary/20 via-transparent to-secondary/20"></div>
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-white/15 via-purple-500/10 via-pink-500/10 to-transparent"></div>
+          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-primary/25 via-purple-500/15 via-pink-500/15 to-secondary/25"></div>
         </div>
 
-        {/* Animated background elements */}
-        <div className="absolute -top-20 -left-20 w-80 h-80 bg-white/5 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute -bottom-20 -right-20 w-80 h-80 bg-white/5 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s'}}></div>
+        {/* Animated background elements with vibrant colors */}
+        <div className="absolute -top-20 -left-20 w-80 h-80 bg-gradient-to-br from-primary/8 to-purple-500/6 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute -bottom-20 -right-20 w-80 h-80 bg-gradient-to-br from-secondary/8 to-pink-500/6 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s'}}></div>
+        <div className="absolute top-1/2 left-1/4 w-64 h-64 bg-gradient-to-br from-cyan-500/6 to-blue-500/6 rounded-full blur-3xl animate-pulse" style={{animationDelay: '2s'}}></div>
 
         <div className="container-responsive text-center max-w-4xl relative z-10">
           <div className="bg-background/10 backdrop-blur-lg rounded-3xl p-8 md:p-12 border border-white/20 shadow-2xl hover:shadow-3xl transition-all duration-500">
@@ -407,7 +410,7 @@ const Landing = () => {
       </section>
 
       {/* Footer */}
-      <footer className="py-12 px-4 border-t bg-muted/10" role="contentinfo">
+      <footer className="py-12 px-4 border-t bg-gradient-to-br from-muted/10 via-purple-50/20 via-pink-50/20 to-muted/10" role="contentinfo">
         <div className="container-responsive">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between pb-8 mb-8 border-b border-muted/50">
             <Link 
