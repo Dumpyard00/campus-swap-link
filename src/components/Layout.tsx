@@ -55,7 +55,7 @@ export const Layout = ({
     { icon: Package, label: 'My Items', path: '/my-listings' },
     { icon: Heart, label: 'Wishlist', path: '/wishlist' },
     { icon: MessageCircle, label: 'Messages', path: '/messages' },
-    { icon: User, label: 'Profile', path: '/seller/1' }, // Using the current user's ID
+    { icon: User, label: 'Profile', path: '/dashboard' }, // Using the current user's ID
   ];
 
   return (
@@ -124,7 +124,7 @@ export const Layout = ({
                 asChild
                 className="rounded-full h-9 w-9 p-0 lg:w-auto lg:px-3 touch-target"
               >
-                <Link to="/seller/1" aria-label="Go to your seller profile" className="flex items-center gap-2">
+                <Link to="/dashboard" aria-label="Go to your seller profile" className="flex items-center gap-2">
                   <div className="flex items-center justify-center h-5 w-5 rounded-full bg-primary/10">
                     <User className="h-3 w-3 text-primary" aria-hidden="true" />
                   </div>

@@ -20,7 +20,7 @@ export function DesktopSidebar({ className, collapsed: propCollapsed }: SidebarP
         { icon: Package, label: 'My Items', path: '/my-listings' },
         { icon: Heart, label: 'Wishlist', path: '/wishlist' },
         { icon: MessageCircle, label: 'Messages', path: '/messages' },
-        { icon: Settings, label: 'My Profile', path: '/seller/1' }, // Using the current user's ID
+        { icon: Settings, label: 'My Profile', path: '/dashboard' }, // Using the current user's ID
     ];
 
     return (
