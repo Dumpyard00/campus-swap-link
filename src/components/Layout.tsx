@@ -24,6 +24,7 @@ export const Layout = ({
   const isMobile = useIsMobile();
   const [isScrolled, setIsScrolled] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
+  const [showMessageAlert, setShowMessageAlert] = useState(true);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -157,26 +158,33 @@ export const Layout = ({
       )}
 
       {/* Desktop notifications or banner that only appears on desktop view */}
-      <div className="hidden lg:block fixed bottom-6 right-6 z-40" style={{ left: "calc(var(--sidebar-width, 72px) + 1.5rem)" }}>
-        <div className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/90 border rounded-lg p-3.5 shadow-sm max-w-3xl mx-auto flex items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <div className="bg-primary/10 p-2 rounded-full">
-              <MessageCircle className="h-4 w-4 text-primary" />
+      {showMessageAlert && (
+        <div className="hidden lg:block fixed bottom-6 right-6 z-40" style={{ left: "calc(var(--sidebar-width, 72px) + 1.5rem)" }}>
+          <div className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/90 border rounded-lg p-3.5 shadow-sm max-w-3xl mx-auto flex items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <div className="bg-primary/10 p-2 rounded-full">
+                <MessageCircle className="h-4 w-4 text-primary" />
+              </div>
+              <p className="text-sm">
+                <span className="font-medium text-primary">New messages:</span> You have 2 unread messages from sellers
+              </p>
             </div>
-            <p className="text-sm">
-              <span className="font-medium text-primary">New messages:</span> You have 2 unread messages from sellers
-            </p>
-          </div>
-          <div className="flex items-center gap-2">
-            <Button size="sm" variant="ghost" className="h-8 px-2.5 text-xs" asChild>
-              <Link to="/messages">Dismiss</Link>
-            </Button>
-            <Button size="sm" variant="default" className="h-8 px-2.5 text-xs" asChild>
-              <Link to="/messages">View Messages</Link>
-            </Button>
+            <div className="flex items-center gap-2">
+              <Button
+                size="sm"
+                variant="ghost"
+                className="h-8 px-2.5 text-xs"
+                onClick={() => setShowMessageAlert(false)}
+              >
+                Dismiss
+              </Button>
+              <Button size="sm" variant="default" className="h-8 px-2.5 text-xs" asChild>
+                <Link to="/messages">View Messages</Link>
+              </Button>
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
       {/* Back to top button on mobile */}
       {isMobile && showScrollTop && (
