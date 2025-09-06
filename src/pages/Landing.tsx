@@ -38,10 +38,10 @@ const Landing = () => {
             </div>
             <span className="font-bold text-xl">CampusDeals</span>
           </div>
-          
+
           <div className="flex items-center space-x-4">
-            <Link 
-              to="/auth" 
+            <Link
+              to="/auth"
               className="text-muted-foreground hover:text-foreground transition-smooth"
             >
               Sign In
@@ -60,18 +60,18 @@ const Landing = () => {
             Your Campus
             <span className="gradient-hero bg-clip-text text-transparent"> Marketplace</span>
           </h1>
-          
+
           <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Buy and sell textbooks, electronics, furniture, and more with your university community. 
+            Buy and sell textbooks, electronics, furniture, and more with your university community.
             Safe, local, and student-friendly.
           </p>
-          
+
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <HeroButton asChild size="lg">
               <Link to="/auth">Start Selling</Link>
             </HeroButton>
-            <Link 
-              to="/products" 
+            <Link
+              to="/products"
               className="text-primary hover:text-primary/80 font-medium transition-smooth"
             >
               Browse Items →
@@ -91,7 +91,7 @@ const Landing = () => {
               The most trusted marketplace for college communities across the country.
             </p>
           </div>
-          
+
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {features.map((feature, index) => (
               <Card key={index} className="text-center shadow-soft hover:shadow-medium transition-smooth">
@@ -139,8 +139,8 @@ const Landing = () => {
           <p className="text-xl text-primary-foreground/90 mb-8">
             Join thousands of students already using CampusDeals to buy and sell with their campus community.
           </p>
-          <HeroButton 
-            asChild 
+          <HeroButton
+            asChild
             size="lg"
             className="bg-background text-foreground hover:bg-background/90"
           >

@@ -50,7 +50,7 @@ export const Layout = ({
 
   const navItems = [
     { icon: Home, label: 'Home', path: '/products' },
-    { icon: Plus, label: 'Sell', path: '/products/new' },
+    { icon: Plus, label: 'Sell Item', path: '/products/new' },
     { icon: Package, label: 'My Items', path: '/my-listings' },
     { icon: Heart, label: 'Wishlist', path: '/wishlist' },
     { icon: MessageCircle, label: 'Messages', path: '/messages' },
@@ -62,44 +62,45 @@ export const Layout = ({
       {showHeader && (
         <header className={cn(
           "sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80",
-          isScrolled ? "shadow-medium" : "shadow-soft"
+          isScrolled ? "shadow-sm" : ""
         )}>
-          <div className="container flex h-16 items-center justify-between px-4">
-            <Link to="/" className="flex items-center space-x-3">
-              <div className="w-9 h-9 rounded-lg bg-primary-gradient flex items-center justify-center shadow-soft">
-                <span className="text-primary-foreground font-bold text-lg">CD</span>
-              </div>
-              <span className="font-bold text-xl hidden md:block text-gradient">CampusDeals</span>
-            </Link>
+          <div className="container flex h-14 items-center justify-between px-4">
+            <div className="flex items-center">
+              <Link to="/" className="flex items-center space-x-2.5 mr-6">
+                <div className="w-8 h-8 rounded-lg bg-primary-gradient flex items-center justify-center shadow-sm">
+                  <span className="text-primary-foreground font-bold text-sm">CD</span>
+                </div>
+                <span className="font-semibold text-lg hidden md:block bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/70">CampusDeals</span>
+              </Link>
+
+              {!isMobile && (
+                <div className="hidden lg:flex items-center space-x-5">
+                  <Link to="/products" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Browse</Link>
+                  <Link to="/products/new" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Sell</Link>
+                </div>
+              )}
+            </div>
 
             {showSearch && !isMobile && (
               <div className="relative mx-4 flex-1 max-w-md hidden md:block">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-                <Input
-                  placeholder="Search for textbooks, electronics, furniture..."
-                  className="pl-10 h-10 rounded-lg border-input shadow-soft"
-                  aria-label="Search products"
-                />
+                <div className="relative group">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4 group-focus-within:text-primary transition-colors" />
+                  <Input
+                    placeholder="Search for textbooks, electronics, furniture..."
+                    className="pl-10 h-9 rounded-lg border-input bg-muted/30 focus:bg-background transition-colors"
+                    aria-label="Search products"
+                  />
+                </div>
               </div>
             )}
 
             <div className="flex items-center space-x-3">
-              <Button variant="outline" size="sm" asChild className="hidden md:flex touch-feedback rounded-lg shadow-soft">
-                <Link to="/wishlist" aria-label="Wishlist">
-                  <Heart className="h-4 w-4 mr-2" />
-                  <span className="text-sm">Wishlist</span>
-                </Link>
-              </Button>
-              <Button variant="outline" size="sm" asChild className="hidden md:flex touch-feedback rounded-lg shadow-soft">
-                <Link to="/messages" aria-label="Messages">
-                  <MessageCircle className="h-4 w-4 mr-2" />
-                  <span className="text-sm">Messages</span>
-                </Link>
-              </Button>
-              <Button variant="outline" size="sm" asChild className="touch-feedback rounded-lg shadow-soft">
-                <Link to="/dashboard" aria-label="Profile">
-                  <User className="h-4 w-4 md:mr-2" />
-                  <span className="hidden md:inline text-sm">Profile</span>
+              <Button variant="ghost" size="sm" asChild className="rounded-full h-9 w-9 p-0 lg:w-auto lg:px-3">
+                <Link to="/dashboard" aria-label="Profile" className="flex items-center gap-2">
+                  <div className="flex items-center justify-center h-5 w-5 rounded-full bg-primary/10">
+                    <User className="h-3 w-3 text-primary" />
+                  </div>
+                  <span className="hidden lg:inline text-sm font-medium">Account</span>
                 </Link>
               </Button>
             </div>
@@ -111,7 +112,11 @@ export const Layout = ({
         {/* Desktop Sidebar */}
         {showHeader && !isMobile && <DesktopSidebar />}
 
-        <main className={cn("flex-1", showBottomNav && "pb-16 lg:pb-0")}>
+        <main className={cn(
+          "flex-1 transition-all duration-300",
+          showBottomNav && "pb-16 lg:pb-0",
+          !isMobile && "px-5 py-5 lg:px-8"
+        )}>
           {children}
         </main>
       </div>
@@ -152,17 +157,24 @@ export const Layout = ({
       )}
 
       {/* Desktop notifications or banner that only appears on desktop view */}
-      <div className="hidden lg:block fixed bottom-8 right-8 left-8 ml-64 z-40">
-        <div className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/90 border rounded-xl p-4 shadow-medium max-w-4xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <div className="bg-primary/10 p-3 rounded-full shadow-soft">
-              <MessageCircle className="h-5 w-5 text-primary" />
+      <div className="hidden lg:block fixed bottom-6 right-6 z-40" style={{ left: "calc(var(--sidebar-width, 72px) + 1.5rem)" }}>
+        <div className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/90 border rounded-lg p-3.5 shadow-sm max-w-3xl mx-auto flex items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <div className="bg-primary/10 p-2 rounded-full">
+              <MessageCircle className="h-4 w-4 text-primary" />
             </div>
             <p className="text-sm">
               <span className="font-medium text-primary">New messages:</span> You have 2 unread messages from sellers
             </p>
           </div>
-          <Button size="sm" variant="outline" className="touch-feedback shadow-soft rounded-lg">View Messages</Button>
+          <div className="flex items-center gap-2">
+            <Button size="sm" variant="ghost" className="h-8 px-2.5 text-xs" asChild>
+              <Link to="/messages">Dismiss</Link>
+            </Button>
+            <Button size="sm" variant="default" className="h-8 px-2.5 text-xs" asChild>
+              <Link to="/messages">View Messages</Link>
+            </Button>
+          </div>
         </div>
       </div>
 
