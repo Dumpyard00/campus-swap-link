@@ -1,16 +1,24 @@
 import { ReactNode } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Heart, User, Package, Home, Plus, MessageCircle } from 'lucide-react';
+import { Heart, User, Package, Home, Plus, MessageCircle, Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { DesktopSidebar } from './ui/desktop-sidebar';
+import { Input } from './ui/input';
 
 interface LayoutProps {
   children: ReactNode;
   showBottomNav?: boolean;
   showHeader?: boolean;
+  showSearch?: boolean;
 }
 
-export const Layout = ({ children, showBottomNav = true, showHeader = true }: LayoutProps) => {
+export const Layout = ({
+  children,
+  showBottomNav = true,
+  showHeader = true,
+  showSearch = false
+}: LayoutProps) => {
   const location = useLocation();
 
   const navItems = [
@@ -33,7 +41,17 @@ export const Layout = ({ children, showBottomNav = true, showHeader = true }: La
               </div>
               <span className="font-bold text-lg hidden md:block">CampusDeals</span>
             </Link>
-            
+
+            {showSearch && (
+              <div className="relative mx-4 flex-1 max-w-md hidden md:block">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+                <Input
+                  placeholder="Search for textbooks, electronics, furniture..."
+                  className="pl-10"
+                />
+              </div>
+            )}
+
             <div className="flex items-center space-x-2">
               <Button variant="ghost" size="sm" asChild className="hidden md:flex">
                 <Link to="/wishlist">
@@ -55,9 +73,14 @@ export const Layout = ({ children, showBottomNav = true, showHeader = true }: La
         </header>
       )}
 
-      <main className={cn("flex-1", showBottomNav && "pb-16")}>
-        {children}
-      </main>
+      <div className="flex">
+        {/* Desktop Sidebar */}
+        {showHeader && <DesktopSidebar />}
+
+        <main className={cn("flex-1", showBottomNav && "pb-16 lg:pb-0")}>
+          {children}
+        </main>
+      </div>
 
       {showBottomNav && (
         <nav className="fixed bottom-0 left-0 right-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-t md:hidden">
@@ -83,6 +106,21 @@ export const Layout = ({ children, showBottomNav = true, showHeader = true }: La
           </div>
         </nav>
       )}
+
+      {/* Desktop notifications or banner that only appears on desktop view */}
+      <div className="hidden lg:block fixed bottom-6 right-6 left-6 ml-64 z-40">
+        <div className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 border rounded-lg p-4 shadow-md max-w-4xl mx-auto flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="bg-primary/20 p-2 rounded-full">
+              <MessageCircle className="h-5 w-5 text-primary" />
+            </div>
+            <p className="text-sm">
+              <span className="font-medium">New messages:</span> You have 2 unread messages from sellers
+            </p>
+          </div>
+          <Button size="sm" variant="outline">View Messages</Button>
+        </div>
+      </div>
     </div>
   );
 };

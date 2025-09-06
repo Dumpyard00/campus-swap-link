@@ -12,7 +12,7 @@ const ProductDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [isWishlisted, setIsWishlisted] = useState(false);
-  
+
   const product = dummyProducts.find(p => p.id === id);
   const sellerReviews = dummyReviews.filter(r => r.sellerId === product?.sellerId);
 
@@ -43,13 +43,13 @@ const ProductDetail = () => {
     console.log('Calling seller:', product.sellerId);
   };
 
-  const averageRating = sellerReviews.length > 0 
-    ? sellerReviews.reduce((sum, review) => sum + review.rating, 0) / sellerReviews.length 
+  const averageRating = sellerReviews.length > 0
+    ? sellerReviews.reduce((sum, review) => sum + review.rating, 0) / sellerReviews.length
     : 0;
 
   return (
     <Layout showBottomNav={false}>
-      <div className="container mx-auto px-4 py-6 max-w-4xl">
+      <div className="container mx-auto px-4 py-6 max-w-6xl">
         {/* Back Button */}
         <Button
           variant="ghost"
@@ -60,10 +60,10 @@ const ProductDetail = () => {
           Back
         </Button>
 
-        <div className="grid lg:grid-cols-2 gap-8">
+        <div className="grid lg:grid-cols-2 gap-8 xl:gap-12">
           {/* Product Image */}
-          <div className="space-y-4">
-            <div className="aspect-square overflow-hidden rounded-lg">
+          <div className="space-y-4 lg:sticky lg:top-24 lg:self-start">
+            <div className="aspect-square overflow-hidden rounded-lg bg-muted/30">
               <img
                 src={product.image}
                 alt={product.title}
@@ -73,58 +73,61 @@ const ProductDetail = () => {
           </div>
 
           {/* Product Info */}
-          <div className="space-y-6">
+          <div className="space-y-6 lg:py-4">
             <div>
               <div className="flex items-start justify-between mb-2">
-                <h1 className="text-2xl font-bold leading-tight">
+                <h1 className="text-2xl md:text-3xl font-bold leading-tight">
                   {product.title}
                 </h1>
                 <Button
-                  variant="ghost"
+                  variant="outline"
                   size="sm"
                   onClick={handleWishlist}
+                  className="rounded-full h-10 w-10 p-0"
                 >
-                  <Heart 
-                    className={`h-5 w-5 ${isWishlisted ? 'fill-red-500 text-red-500' : ''}`} 
+                  <Heart
+                    className={`h-5 w-5 ${isWishlisted ? 'fill-red-500 text-red-500' : ''}`}
                   />
                 </Button>
               </div>
-              
+
               <div className="flex items-center gap-2 mb-4">
                 <Badge variant="secondary">{product.category}</Badge>
                 <Badge variant="outline">{product.condition}</Badge>
               </div>
-              
+
               <p className="text-3xl font-bold text-primary mb-4">
                 ₹{product.price}
               </p>
             </div>
 
             {/* Seller Info */}
-            <Card>
-              <CardContent className="p-4">
+            <Card className="lg:hover:shadow-md lg:transition-all">
+              <CardContent className="p-4 lg:p-6">
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-3">
-                    <Avatar>
+                  <div className="flex items-center space-x-3 lg:space-x-4">
+                    <Avatar className="h-10 w-10 lg:h-14 lg:w-14">
                       <AvatarImage src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${product.sellerId}`} />
                       <AvatarFallback>{product.sellerName[0]}</AvatarFallback>
                     </Avatar>
                     <div>
-                      <p className="font-medium">{product.sellerName}</p>
-                      <p className="text-sm text-muted-foreground flex items-center gap-1">
-                        <Badge variant="outline" className="text-xs">Student</Badge>
-                        <MapPin className="h-3 w-3" />
-                        IIT Delhi
-                      </p>
-                      {sellerReviews.length > 0 && (
-                        <div className="flex items-center gap-1 mt-1">
-                          <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
-                          <span className="text-xs font-medium">{averageRating.toFixed(1)}</span>
-                          <span className="text-xs text-muted-foreground">
-                            ({sellerReviews.length} reviews)
-                          </span>
-                        </div>
-                      )}
+                      <p className="font-medium lg:text-lg">{product.sellerName}</p>
+                      <div className="flex flex-col lg:flex-row lg:items-center lg:gap-2">
+                        <p className="text-sm text-muted-foreground flex items-center gap-1">
+                          <Badge variant="outline" className="text-xs">Student</Badge>
+                          <MapPin className="h-3 w-3" />
+                          IIT Delhi
+                        </p>
+                        {sellerReviews.length > 0 && (
+                          <div className="flex items-center gap-1 mt-1 lg:mt-0">
+                            <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
+                            <span className="text-xs font-medium">{averageRating.toFixed(1)}</span>
+                            <span className="text-xs text-muted-foreground">
+                              ({sellerReviews.length} reviews)
+                            </span>
+                          </div>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -132,52 +135,54 @@ const ProductDetail = () => {
             </Card>
 
             {/* Description */}
-            <div>
-              <h3 className="font-semibold mb-2">Description</h3>
-              <p className="text-muted-foreground leading-relaxed">
+            <div className="lg:bg-muted/20 lg:p-6 lg:rounded-lg">
+              <h3 className="font-semibold mb-2 lg:mb-4 lg:text-lg">Description</h3>
+              <p className="text-muted-foreground leading-relaxed lg:text-base">
                 {product.description}
               </p>
             </div>
 
             {/* Action Buttons */}
-            <div className="grid grid-cols-2 gap-3">
-              <Button 
+            <div className="grid grid-cols-2 gap-3 lg:gap-4">
+              <Button
                 onClick={handleContact}
                 variant="outline"
-                className="flex items-center gap-2"
+                className="flex items-center gap-2 h-12 lg:text-base"
+                size="lg"
               >
-                <MessageCircle className="h-4 w-4" />
+                <MessageCircle className="h-4 w-4 lg:h-5 lg:w-5" />
                 Message
               </Button>
-              <Button 
+              <Button
                 onClick={handleCall}
-                className="bg-primary-solid text-primary-foreground hover:bg-primary-light flex items-center gap-2"
+                className="bg-primary-solid text-primary-foreground hover:bg-primary-light flex items-center gap-2 h-12 lg:text-base"
+                size="lg"
               >
-                <Phone className="h-4 w-4" />
+                <Phone className="h-4 w-4 lg:h-5 lg:w-5" />
                 Call Seller
               </Button>
             </div>
 
             {/* Product Details */}
             <Card>
-              <CardContent className="p-4 space-y-2">
-                <h3 className="font-semibold mb-3">Item Details</h3>
-                <div className="grid grid-cols-2 gap-2 text-sm">
-                  <div>
-                    <span className="text-muted-foreground">Condition:</span>
-                    <span className="ml-2 capitalize">{product.condition}</span>
+              <CardContent className="p-4 lg:p-6 space-y-2">
+                <h3 className="font-semibold mb-3 lg:mb-4 lg:text-lg">Item Details</h3>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm lg:text-base">
+                  <div className="p-2 lg:p-3 bg-muted/30 rounded-md">
+                    <span className="text-muted-foreground block mb-1">Condition</span>
+                    <span className="font-medium capitalize">{product.condition}</span>
                   </div>
-                  <div>
-                    <span className="text-muted-foreground">Listed:</span>
-                    <span className="ml-2">{new Date(product.createdAt).toLocaleDateString()}</span>
+                  <div className="p-2 lg:p-3 bg-muted/30 rounded-md">
+                    <span className="text-muted-foreground block mb-1">Listed</span>
+                    <span className="font-medium">{new Date(product.createdAt).toLocaleDateString()}</span>
                   </div>
-                  <div>
-                    <span className="text-muted-foreground">Category:</span>
-                    <span className="ml-2">{product.category}</span>
+                  <div className="p-2 lg:p-3 bg-muted/30 rounded-md">
+                    <span className="text-muted-foreground block mb-1">Category</span>
+                    <span className="font-medium">{product.category}</span>
                   </div>
-                  <div>
-                    <span className="text-muted-foreground">ID:</span>
-                    <span className="ml-2">#{product.id}</span>
+                  <div className="p-2 lg:p-3 bg-muted/30 rounded-md">
+                    <span className="text-muted-foreground block mb-1">ID</span>
+                    <span className="font-medium">#{product.id}</span>
                   </div>
                 </div>
               </CardContent>
@@ -186,27 +191,39 @@ const ProductDetail = () => {
             {/* Seller Reviews */}
             {sellerReviews.length > 0 && (
               <Card>
-                <CardContent className="p-4">
-                  <h3 className="font-semibold mb-3">Seller Reviews</h3>
-                  <div className="space-y-3">
+                <CardContent className="p-4 lg:p-6">
+                  <div className="flex justify-between items-center mb-4">
+                    <h3 className="font-semibold lg:text-lg">Seller Reviews</h3>
+                    {sellerReviews.length > 3 && (
+                      <Button variant="link" size="sm" className="text-primary">
+                        View all reviews
+                      </Button>
+                    )}
+                  </div>
+                  <div className="space-y-4">
                     {sellerReviews.slice(0, 3).map((review) => (
-                      <div key={review.id} className="border-b last:border-0 pb-3 last:pb-0">
-                        <div className="flex items-center gap-2 mb-1">
-                          <div className="flex">
-                            {[...Array(5)].map((_, i) => (
-                              <Star
-                                key={i}
-                                className={`h-3 w-3 ${
-                                  i < review.rating
-                                    ? 'fill-yellow-400 text-yellow-400'
-                                    : 'text-gray-300'
-                                }`}
-                              />
-                            ))}
+                      <div key={review.id} className="border-b last:border-0 pb-4 last:pb-0 lg:hover:bg-muted/20 lg:p-3 lg:rounded-md lg:-mx-3 lg:transition-colors">
+                        <div className="flex items-center justify-between mb-2">
+                          <div className="flex items-center gap-2">
+                            <Avatar className="h-8 w-8">
+                              <AvatarFallback className="text-xs">{review.reviewerName[0]}</AvatarFallback>
+                            </Avatar>
+                            <span className="font-medium text-sm">{review.reviewerName}</span>
                           </div>
                           <span className="text-xs text-muted-foreground">
                             {new Date(review.date).toLocaleDateString()}
                           </span>
+                        </div>
+                        <div className="flex mb-2">
+                          {[...Array(5)].map((_, i) => (
+                            <Star
+                              key={i}
+                              className={`h-3 w-3 ${i < review.rating
+                                  ? 'fill-yellow-400 text-yellow-400'
+                                  : 'text-gray-300'
+                                }`}
+                            />
+                          ))}
                         </div>
                         <p className="text-sm text-muted-foreground">{review.comment}</p>
                       </div>

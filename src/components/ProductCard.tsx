@@ -13,26 +13,27 @@ interface ProductCardProps {
 export const ProductCard = ({ product, showActions, onEdit, onDelete }: ProductCardProps) => {
   return (
     <Link to={`/products/${product.id}`}>
-      <Card className="overflow-hidden hover:shadow-medium transition-smooth cursor-pointer group">
-        <div className="aspect-square overflow-hidden">
+      <Card className="overflow-hidden hover:shadow-medium transition-smooth cursor-pointer group h-full flex flex-col">
+        <div className="aspect-square overflow-hidden relative">
           <img
             src={product.image}
             alt={product.title}
             className="w-full h-full object-cover group-hover:scale-105 transition-smooth"
           />
+          <Badge
+            variant="secondary"
+            className="absolute top-2 right-2 text-xs opacity-90"
+          >
+            {product.condition}
+          </Badge>
         </div>
-        
-        <CardContent className="p-4">
-          <div className="space-y-2">
-            <div className="flex items-start justify-between">
-              <h3 className="font-medium line-clamp-2 text-sm leading-tight">
-                {product.title}
-              </h3>
-              <Badge variant="secondary" className="ml-2 shrink-0 text-xs">
-                {product.condition}
-              </Badge>
-            </div>
-            
+
+        <CardContent className="p-4 flex-1 flex flex-col">
+          <div className="space-y-2 flex-1">
+            <h3 className="font-medium line-clamp-2 text-sm md:text-base leading-tight group-hover:text-primary transition-colors">
+              {product.title}
+            </h3>
+
             <div className="flex items-center justify-between">
               <p className="text-lg font-bold text-primary">
                 ₹{product.price}
@@ -41,12 +42,12 @@ export const ProductCard = ({ product, showActions, onEdit, onDelete }: ProductC
                 {product.category}
               </p>
             </div>
-            
+
             <p className="text-xs text-muted-foreground">
               by {product.sellerName}
             </p>
           </div>
-          
+
           {showActions && (
             <div className="flex gap-2 mt-4">
               <button

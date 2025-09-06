@@ -41,6 +41,25 @@ export const FABButton = forwardRef<HTMLButtonElement, ButtonProps>(
 );
 FABButton.displayName = "FABButton";
 
+// Desktop Action Button - A larger, more visible action button for desktop layouts
+export const DesktopActionButton = forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ className, children, ...props }, ref) => {
+    return (
+      <Button
+        ref={ref}
+        className={cn(
+          "h-12 px-6 text-base font-medium rounded-md gradient-primary text-primary-foreground shadow-medium hover:shadow-strong transition-smooth",
+          className
+        )}
+        {...props}
+      >
+        {children}
+      </Button>
+    );
+  }
+);
+DesktopActionButton.displayName = "DesktopActionButton";
+
 // Category button variant
 export const CategoryButton = forwardRef<HTMLButtonElement, ButtonProps & { active?: boolean }>(
   ({ className, children, active, ...props }, ref) => {
@@ -50,8 +69,8 @@ export const CategoryButton = forwardRef<HTMLButtonElement, ButtonProps & { acti
         variant="outline"
         className={cn(
           "transition-smooth",
-          active 
-            ? "bg-primary text-primary-foreground border-primary" 
+          active
+            ? "bg-primary text-primary-foreground border-primary"
             : "hover:bg-accent hover:text-accent-foreground",
           className
         )}
