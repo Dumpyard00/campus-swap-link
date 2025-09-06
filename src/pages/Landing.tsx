@@ -6,7 +6,7 @@ import { useIsMobile } from '@/hooks/use-mobile';
 
 const Landing = () => {
   const isMobile = useIsMobile();
-  
+
   const features = [
     {
       icon: ShoppingBag,
@@ -29,7 +29,7 @@ const Landing = () => {
       description: 'List items in seconds and find what you need with smart search and filters.'
     }
   ];
-  
+
   const testimonials = [
     {
       name: "Alex Johnson",
@@ -78,17 +78,17 @@ const Landing = () => {
       {/* Hero Section */}
       <section className="relative overflow-hidden py-20 px-4 md:py-28 lg:py-36">
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(45%_40%_at_50%_60%,rgba(var(--primary-rgb),0.12),transparent)]"></div>
-        
+
         {/* Decorative elements */}
         <div className="absolute hidden md:block -top-24 right-10 w-72 h-72 bg-primary/5 rounded-full blur-3xl"></div>
         <div className="absolute hidden md:block bottom-12 -left-20 w-80 h-80 bg-secondary/5 rounded-full blur-3xl"></div>
-        
+
         <div className="container mx-auto text-center max-w-4xl">
           <div className="inline-flex items-center px-3 py-1.5 mb-8 border border-primary/20 bg-primary/5 rounded-full animate-fade-in">
             <span className="flex h-2 w-2 rounded-full bg-primary mr-2 animate-pulse-slow"></span>
             <span className="text-sm font-medium text-primary">Trusted by 50,000+ students</span>
           </div>
-          
+
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight tracking-tight animate-fade-in">
             Your Campus
             <span className="gradient-hero bg-clip-text text-transparent"> Marketplace</span>
@@ -133,12 +133,12 @@ const Landing = () => {
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
             {features.map((feature, index) => (
-              <Card 
-                key={index} 
-                className="text-center border-muted/50 shadow-soft hover:shadow-medium hover:border-primary/20 transition-all duration-300"
+              <Card
+                key={index}
+                className={`text-center border-muted/50 shadow-soft hover:shadow-medium hover:border-primary/20 transition-all duration-300 animate-fade-in animate-delay-${index * 100}`}
               >
                 <CardContent className="p-6 pt-8">
-                  <div className="w-14 h-14 rounded-full gradient-primary flex items-center justify-center mx-auto mb-6 shadow-md">
+                  <div className="w-14 h-14 rounded-full gradient-primary flex items-center justify-center mx-auto mb-6 shadow-md animate-float">
                     <feature.icon className="h-6 w-6 text-primary-foreground" aria-hidden="true" />
                   </div>
                   <h3 className="font-semibold text-lg mb-3" id={`feature-${index}`}>{feature.title}</h3>
@@ -168,7 +168,7 @@ const Landing = () => {
               Three simple steps to start trading with your campus community
             </p>
           </div>
-          
+
           <div className="grid md:grid-cols-3 gap-8 md:gap-12">
             <div className="relative flex flex-col items-center text-center">
               <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-6 shadow-sm relative">
@@ -177,11 +177,11 @@ const Landing = () => {
               </div>
               <h3 className="text-xl font-semibold mb-2">Create an Account</h3>
               <p className="text-muted-foreground">Sign up with your university email to join your campus marketplace community</p>
-              
+
               {/* Desktop connector line */}
               <div className="hidden md:block absolute top-10 left-[60%] w-full h-0.5 bg-primary/20"></div>
             </div>
-            
+
             <div className="relative flex flex-col items-center text-center">
               <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-6 shadow-sm relative">
                 <ShoppingBag className="h-8 w-8 text-primary" aria-hidden="true" />
@@ -189,11 +189,11 @@ const Landing = () => {
               </div>
               <h3 className="text-xl font-semibold mb-2">List or Browse</h3>
               <p className="text-muted-foreground">Easily list items for sale or browse what's available from other students</p>
-              
+
               {/* Desktop connector line */}
               <div className="hidden md:block absolute top-10 left-[60%] w-full h-0.5 bg-primary/20"></div>
             </div>
-            
+
             <div className="flex flex-col items-center text-center">
               <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-6 shadow-sm relative">
                 <Users className="h-8 w-8 text-primary" aria-hidden="true" />
@@ -205,7 +205,7 @@ const Landing = () => {
           </div>
         </div>
       </section>
-      
+
       {/* Stats Section */}
       <section className="py-20 px-4 bg-muted/10">
         <div className="container mx-auto max-w-6xl">
@@ -251,7 +251,7 @@ const Landing = () => {
               Join the thousands of students who love using CampusDeals
             </p>
           </div>
-          
+
           <div className="grid md:grid-cols-3 gap-6">
             {testimonials.map((testimonial, index) => (
               <div key={index} className="bg-background border border-muted/50 rounded-xl p-6 shadow-soft hover:shadow-medium transition-all duration-300">
@@ -272,12 +272,12 @@ const Landing = () => {
           </div>
         </div>
       </section>
-      
+
       {/* CTA Section */}
       <section className="py-20 px-4 relative overflow-hidden">
         <div className="absolute inset-0 -z-10 gradient-hero"></div>
         <div className="absolute inset-0 -z-5 bg-[url('/placeholder.svg')] opacity-5 bg-repeat"></div>
-        
+
         <div className="container mx-auto text-center max-w-3xl relative z-10">
           <div className="bg-background/10 backdrop-blur-lg rounded-2xl p-8 md:p-12 border border-white/20 shadow-xl">
             <h2 className="text-3xl md:text-4xl font-bold text-primary-foreground mb-6">
@@ -318,7 +318,7 @@ const Landing = () => {
               </div>
               <span className="font-bold text-xl bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/70">CampusDeals</span>
             </div>
-            
+
             <div className="flex flex-wrap gap-8">
               <div>
                 <h4 className="font-semibold mb-3">Platform</h4>
@@ -346,20 +346,20 @@ const Landing = () => {
               </div>
             </div>
           </div>
-          
+
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="text-muted-foreground text-sm order-2 md:order-1">
               © 2025 CampusDeals. Making campus trading simple and secure.
             </p>
             <div className="flex space-x-4 order-1 md:order-2">
               <a href="#" aria-label="CampusDeals on Instagram" className="text-muted-foreground hover:text-primary transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5" /><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" /><line x1="17.5" x2="17.51" y1="6.5" y2="6.5" /></svg>
               </a>
               <a href="#" aria-label="CampusDeals on Twitter" className="text-muted-foreground hover:text-primary transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" /></svg>
               </a>
               <a href="#" aria-label="CampusDeals on Facebook" className="text-muted-foreground hover:text-primary transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" /></svg>
               </a>
             </div>
           </div>
