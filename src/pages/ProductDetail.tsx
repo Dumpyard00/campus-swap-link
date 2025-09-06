@@ -5,16 +5,39 @@ import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { dummyProducts, dummyReviews } from '@/lib/dummy-data';
-import { ArrowLeft, MessageCircle, Heart, Phone, Star, MapPin } from 'lucide-react';
-import { useState } from 'react';
+import { ArrowLeft, MessageCircle, Heart, Phone, Star, MapPin, Share2 } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { ImageCarousel } from '@/components/ui/image-carousel';
+import { ProductDetailSkeleton } from '@/components/ui/product-detail-skeleton';
+import { cn } from '@/lib/utils';
 
 const ProductDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [isWishlisted, setIsWishlisted] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [showShareOptions, setShowShareOptions] = useState(false);
 
   const product = dummyProducts.find(p => p.id === id);
   const sellerReviews = dummyReviews.filter(r => r.sellerId === product?.sellerId);
+
+  // Simulate loading state
+  useEffect(() => {
+    // Simulate network delay
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 700);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (isLoading) {
+    return (
+      <Layout showBottomNav={false}>
+        <ProductDetailSkeleton />
+      </Layout>
+    );
+  }
 
   if (!product) {
     return (
@@ -63,13 +86,12 @@ const ProductDetail = () => {
         <div className="grid lg:grid-cols-2 gap-8 xl:gap-12">
           {/* Product Image */}
           <div className="space-y-4 lg:sticky lg:top-24 lg:self-start">
-            <div className="aspect-square overflow-hidden rounded-lg bg-muted/30">
-              <img
-                src={product.image}
-                alt={product.title}
-                className="w-full h-full object-cover"
-              />
-            </div>
+            {/* Use our new ImageCarousel component */}
+            <ImageCarousel
+              images={[product.image, ...Array(3).fill(product.image)]}
+              alt={product.title}
+              className="aspect-square rounded-lg"
+            />
           </div>
 
           {/* Product Info */}
@@ -79,17 +101,41 @@ const ProductDetail = () => {
                 <h1 className="text-2xl md:text-3xl font-bold leading-tight">
                   {product.title}
                 </h1>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={handleWishlist}
-                  className="rounded-full h-10 w-10 p-0"
-                >
-                  <Heart
-                    className={`h-5 w-5 ${isWishlisted ? 'fill-red-500 text-red-500' : ''}`}
-                  />
-                </Button>
+                <div className="flex gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setShowShareOptions(!showShareOptions)}
+                    className="rounded-full h-10 w-10 p-0"
+                  >
+                    <Share2 className="h-5 w-5" />
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={handleWishlist}
+                    className="rounded-full h-10 w-10 p-0"
+                  >
+                    <Heart
+                      className={cn(
+                        "h-5 w-5 transition-colors",
+                        isWishlisted && "fill-primary text-primary"
+                      )}
+                    />
+                  </Button>
+                </div>
               </div>
+
+              {showShareOptions && (
+                <div className="bg-muted/20 p-3 rounded-lg mb-3 animate-in fade-in slide-in-from-top-5 duration-200">
+                  <p className="text-sm mb-2">Share this product</p>
+                  <div className="flex gap-2">
+                    <Button size="sm" variant="secondary" className="h-9">Copy Link</Button>
+                    <Button size="sm" variant="secondary" className="h-9">WhatsApp</Button>
+                    <Button size="sm" variant="secondary" className="h-9">Email</Button>
+                  </div>
+                </div>
+              )}
 
               <div className="flex items-center gap-2 mb-4">
                 <Badge variant="secondary">{product.category}</Badge>
@@ -206,9 +252,9 @@ const ProductDetail = () => {
                         <div className="flex items-center justify-between mb-2">
                           <div className="flex items-center gap-2">
                             <Avatar className="h-8 w-8">
-                              <AvatarFallback className="text-xs">{review.reviewerName[0]}</AvatarFallback>
+                              <AvatarFallback className="text-xs">U</AvatarFallback>
                             </Avatar>
-                            <span className="font-medium text-sm">{review.reviewerName}</span>
+                            <span className="font-medium text-sm">User {review.buyerId}</span>
                           </div>
                           <span className="text-xs text-muted-foreground">
                             {new Date(review.date).toLocaleDateString()}
@@ -219,8 +265,8 @@ const ProductDetail = () => {
                             <Star
                               key={i}
                               className={`h-3 w-3 ${i < review.rating
-                                  ? 'fill-yellow-400 text-yellow-400'
-                                  : 'text-gray-300'
+                                ? 'fill-yellow-400 text-yellow-400'
+                                : 'text-gray-300'
                                 }`}
                             />
                           ))}

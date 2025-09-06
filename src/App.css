@@ -52,3 +52,25 @@
 .animate-spin {
   animation: spin 1s linear infinite;
 }
+
+/* Heart pop animation for double-tap like */
+@keyframes heart-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+}
+
+.animate-heart-pop {
+  animation: heart-pop 800ms ease-in-out forwards;
+}
