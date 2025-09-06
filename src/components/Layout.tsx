@@ -64,7 +64,7 @@ export const Layout = ({
       <a href="#main-content" className="skip-link">
         Skip to main content
       </a>
-      
+
       {showHeader && (
         <header className={cn(
           "sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80",
@@ -72,8 +72,8 @@ export const Layout = ({
         )} role="banner">
           <div className="container-responsive flex h-14 items-center justify-between">
             <div className="flex items-center">
-              <Link 
-                to="/" 
+              <Link
+                to="/"
                 className="flex items-center space-x-2.5 mr-6 focus-ring rounded-md p-1 -m-1"
                 aria-label="CampusDeals home"
               >
@@ -85,15 +85,15 @@ export const Layout = ({
 
               {!isMobile && (
                 <nav className="hidden lg:flex items-center space-x-5" role="navigation" aria-label="Main navigation">
-                  <Link 
-                    to="/products" 
+                  <Link
+                    to="/products"
                     className="text-sm text-muted-foreground hover:text-foreground transition-colors focus-ring rounded-md px-2 py-1"
                     aria-label="Browse products"
                   >
                     Browse
                   </Link>
-                  <Link 
-                    to="/products/new" 
+                  <Link
+                    to="/products/new"
                     className="text-sm text-muted-foreground hover:text-foreground transition-colors focus-ring rounded-md px-2 py-1"
                     aria-label="Sell an item"
                   >
@@ -118,17 +118,17 @@ export const Layout = ({
             )}
 
             <div className="flex items-center space-x-3">
-              <Button 
-                variant="ghost" 
-                size="sm" 
-                asChild 
+              <Button
+                variant="ghost"
+                size="sm"
+                asChild
                 className="rounded-full h-9 w-9 p-0 lg:w-auto lg:px-3 touch-target"
               >
-                <Link to="/dashboard" aria-label="Go to your account dashboard" className="flex items-center gap-2">
+                <Link to="/seller/1" aria-label="Go to your seller profile" className="flex items-center gap-2">
                   <div className="flex items-center justify-center h-5 w-5 rounded-full bg-primary/10">
                     <User className="h-3 w-3 text-primary" aria-hidden="true" />
                   </div>
-                  <span className="hidden lg:inline text-sm font-medium">Account</span>
+                  <span className="hidden lg:inline text-sm font-medium">Profile</span>
                 </Link>
               </Button>
             </div>
@@ -140,7 +140,7 @@ export const Layout = ({
         {/* Desktop Sidebar */}
         {showHeader && !isMobile && <DesktopSidebar />}
 
-        <main 
+        <main
           id="main-content"
           className={cn(
             "flex-1 transition-all duration-300",
@@ -155,7 +155,7 @@ export const Layout = ({
       </div>
 
       {showBottomNav && isMobile && (
-        <nav 
+        <nav
           className="fixed bottom-0 left-0 right-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 border-t md:hidden shadow-medium"
           role="navigation"
           aria-label="Mobile navigation"
@@ -180,11 +180,11 @@ export const Layout = ({
                     "flex items-center justify-center w-10 h-10 rounded-full transition-colors",
                     isActive ? "bg-primary/10" : "bg-transparent"
                   )}>
-                    <Icon 
+                    <Icon
                       className={cn(
                         "h-5 w-5",
                         isActive ? "text-primary" : "text-muted-foreground"
-                      )} 
+                      )}
                       aria-hidden="true"
                     />
                   </div>

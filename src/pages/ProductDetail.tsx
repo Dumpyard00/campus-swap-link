@@ -158,7 +158,7 @@ const ProductDetail = () => {
               <CardContent className="p-4 lg:p-6">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-3 lg:space-x-4">
-                    <Avatar 
+                    <Avatar
                       className="h-10 w-10 lg:h-14 lg:w-14 cursor-pointer hover:ring-2 hover:ring-primary/50 transition-all"
                       onClick={() => navigate(`/seller/${product.sellerId}`)}
                     >
@@ -166,7 +166,7 @@ const ProductDetail = () => {
                       <AvatarFallback>{product.sellerName[0]}</AvatarFallback>
                     </Avatar>
                     <div>
-                      <p 
+                      <p
                         className="font-medium lg:text-lg cursor-pointer hover:text-primary transition-colors"
                         onClick={() => navigate(`/seller/${product.sellerId}`)}
                       >
@@ -182,7 +182,7 @@ const ProductDetail = () => {
                           <div className="flex items-center gap-1 mt-1 lg:mt-0">
                             <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
                             <span className="text-xs font-medium">{averageRating.toFixed(1)}</span>
-                            <span 
+                            <span
                               className="text-xs text-muted-foreground hover:text-primary cursor-pointer transition-colors"
                               onClick={() => navigate(`/seller/${product.sellerId}`)}
                             >

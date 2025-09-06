@@ -78,7 +78,7 @@ export const ProductCard = ({ product, showActions, onEdit, onDelete }: ProductC
       <CardContent className="p-4 sm:p-5 flex-1 flex flex-col">
         <div className="space-y-3 flex-1">
           <h3 className="font-medium line-clamp-2 text-sm md:text-base leading-tight group-hover:text-primary transition-colors">
-            <a 
+            <a
               href={`/products/${product.id}`}
               className="focus-ring rounded-md -m-1 p-1 block"
               aria-label={`View details for ${product.title}`}
@@ -91,7 +91,7 @@ export const ProductCard = ({ product, showActions, onEdit, onDelete }: ProductC
             <p className="text-base sm:text-lg font-bold text-primary" aria-label={`Price: ₹${product.price}`}>
               ₹{product.price}
             </p>
-            <span 
+            <span
               className="text-xs px-2.5 py-0.5 bg-accent rounded-full text-accent-foreground font-medium"
               aria-label={`Category: ${product.category}`}
             >
@@ -99,13 +99,13 @@ export const ProductCard = ({ product, showActions, onEdit, onDelete }: ProductC
             </span>
           </div>
 
-          <Link 
-            to={`/seller/${product.sellerId}`} 
+          <Link
+            to={`/seller/${product.sellerId}`}
             className="text-xs text-muted-foreground flex items-center gap-1.5 hover:text-primary transition-colors"
             onClick={(e) => e.stopPropagation()}
           >
             <span className="inline-block w-4 h-4 bg-muted rounded-full overflow-hidden" aria-hidden="true">
-              <img 
+              <img
                 src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${product.sellerId}`}
                 className="w-full h-full object-cover"
                 alt=""
