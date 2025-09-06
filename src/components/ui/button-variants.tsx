@@ -10,7 +10,7 @@ export const HeroButton = forwardRef<HTMLButtonElement, ButtonProps>(
       <Button
         ref={ref}
         className={cn(
-          "gradient-hero text-primary-foreground hover:shadow-medium transition-smooth font-medium px-8 py-3 text-lg",
+          "bg-primary text-primary-foreground hover:bg-primary/90 hover:shadow-medium transition-smooth font-medium px-8 py-3.5 text-lg rounded-xl shadow-soft",
           className
         )}
         {...props}
@@ -29,7 +29,7 @@ export const FABButton = forwardRef<HTMLButtonElement, ButtonProps>(
       <Button
         ref={ref}
         className={cn(
-          "fixed bottom-6 right-6 w-14 h-14 rounded-full gradient-primary text-primary-foreground shadow-strong hover:shadow-medium transition-smooth z-50",
+          "fixed bottom-6 right-6 w-16 h-16 rounded-full bg-primary text-primary-foreground shadow-strong hover:shadow-medium hover:bg-primary/90 transition-smooth z-50 focus:ring-4 focus:ring-primary/20",
           className
         )}
         {...props}
@@ -68,10 +68,10 @@ export const CategoryButton = forwardRef<HTMLButtonElement, ButtonProps & { acti
         ref={ref}
         variant="outline"
         className={cn(
-          "transition-smooth",
+          "transition-smooth touch-feedback",
           active
-            ? "bg-primary text-primary-foreground border-primary"
-            : "hover:bg-accent hover:text-accent-foreground",
+            ? "bg-primary text-primary-foreground border-primary shadow-soft"
+            : "hover:bg-accent hover:text-accent-foreground border-muted",
           className
         )}
         {...props}
@@ -82,3 +82,22 @@ export const CategoryButton = forwardRef<HTMLButtonElement, ButtonProps & { acti
   }
 );
 CategoryButton.displayName = "CategoryButton";
+
+// Action button variant - for important actions
+export const ActionButton = forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ className, children, ...props }, ref) => {
+    return (
+      <Button
+        ref={ref}
+        className={cn(
+          "bg-primary text-primary-foreground hover:bg-primary/90 shadow-soft hover:shadow-medium rounded-lg py-2.5 px-5 font-medium transition-smooth touch-feedback",
+          className
+        )}
+        {...props}
+      >
+        {children}
+      </Button>
+    );
+  }
+);
+ActionButton.displayName = "ActionButton";

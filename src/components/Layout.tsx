@@ -61,15 +61,15 @@ export const Layout = ({
     <div className="min-h-screen bg-background">
       {showHeader && (
         <header className={cn(
-          "sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60",
-          isScrolled && "shadow-sm"
+          "sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80",
+          isScrolled ? "shadow-medium" : "shadow-soft"
         )}>
-          <div className="container flex h-14 items-center justify-between px-4">
-            <Link to="/" className="flex items-center space-x-2">
-              <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-sm">CD</span>
+          <div className="container flex h-16 items-center justify-between px-4">
+            <Link to="/" className="flex items-center space-x-3">
+              <div className="w-9 h-9 rounded-lg bg-primary-gradient flex items-center justify-center shadow-soft">
+                <span className="text-primary-foreground font-bold text-lg">CD</span>
               </div>
-              <span className="font-bold text-lg hidden md:block">CampusDeals</span>
+              <span className="font-bold text-xl hidden md:block text-gradient">CampusDeals</span>
             </Link>
 
             {showSearch && !isMobile && (
@@ -77,25 +77,29 @@ export const Layout = ({
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
                 <Input
                   placeholder="Search for textbooks, electronics, furniture..."
-                  className="pl-10"
+                  className="pl-10 h-10 rounded-lg border-input shadow-soft"
+                  aria-label="Search products"
                 />
               </div>
             )}
 
-            <div className="flex items-center space-x-2">
-              <Button variant="ghost" size="sm" asChild className="hidden md:flex touch-feedback">
-                <Link to="/wishlist">
-                  <Heart className="h-5 w-5" />
+            <div className="flex items-center space-x-3">
+              <Button variant="outline" size="sm" asChild className="hidden md:flex touch-feedback rounded-lg shadow-soft">
+                <Link to="/wishlist" aria-label="Wishlist">
+                  <Heart className="h-4 w-4 mr-2" />
+                  <span className="text-sm">Wishlist</span>
                 </Link>
               </Button>
-              <Button variant="ghost" size="sm" asChild className="hidden md:flex touch-feedback">
-                <Link to="/messages">
-                  <MessageCircle className="h-5 w-5" />
+              <Button variant="outline" size="sm" asChild className="hidden md:flex touch-feedback rounded-lg shadow-soft">
+                <Link to="/messages" aria-label="Messages">
+                  <MessageCircle className="h-4 w-4 mr-2" />
+                  <span className="text-sm">Messages</span>
                 </Link>
               </Button>
-              <Button variant="ghost" size="sm" asChild className="touch-feedback">
-                <Link to="/dashboard">
-                  <User className="h-5 w-5" />
+              <Button variant="outline" size="sm" asChild className="touch-feedback rounded-lg shadow-soft">
+                <Link to="/dashboard" aria-label="Profile">
+                  <User className="h-4 w-4 md:mr-2" />
+                  <span className="hidden md:inline text-sm">Profile</span>
                 </Link>
               </Button>
             </div>
@@ -113,7 +117,7 @@ export const Layout = ({
       </div>
 
       {showBottomNav && isMobile && (
-        <nav className="fixed bottom-0 left-0 right-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-t md:hidden shadow-[0_-2px_10px_rgba(0,0,0,0.05)]">
+        <nav className="fixed bottom-0 left-0 right-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 border-t md:hidden shadow-medium">
           <div className="grid h-16 max-w-lg mx-auto grid-cols-6">
             {navItems.map(({ icon: Icon, label, path }) => {
               const isActive = location.pathname === path;
@@ -127,9 +131,19 @@ export const Layout = ({
                       ? "text-primary"
                       : "text-muted-foreground hover:text-foreground"
                   )}
+                  aria-current={isActive ? "page" : undefined}
+                  aria-label={label}
                 >
-                  <Icon className={cn("h-5 w-5 mb-1", isActive && "text-primary")} />
-                  <span className={cn("text-[11px]", isActive && "font-medium")}>{label}</span>
+                  <div className={cn(
+                    "flex items-center justify-center w-10 h-10 rounded-full",
+                    isActive ? "bg-primary/10" : "bg-transparent"
+                  )}>
+                    <Icon className={cn(
+                      "h-5 w-5",
+                      isActive ? "text-primary" : "text-muted-foreground"
+                    )} />
+                  </div>
+                  <span className={cn("text-xs mt-0.5", isActive && "font-medium")}>{label}</span>
                 </Link>
               );
             })}
@@ -138,17 +152,17 @@ export const Layout = ({
       )}
 
       {/* Desktop notifications or banner that only appears on desktop view */}
-      <div className="hidden lg:block fixed bottom-6 right-6 left-6 ml-64 z-40">
-        <div className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 border rounded-lg p-4 shadow-md max-w-4xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="bg-primary/20 p-2 rounded-full">
+      <div className="hidden lg:block fixed bottom-8 right-8 left-8 ml-64 z-40">
+        <div className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/90 border rounded-xl p-4 shadow-medium max-w-4xl mx-auto flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <div className="bg-primary/10 p-3 rounded-full shadow-soft">
               <MessageCircle className="h-5 w-5 text-primary" />
             </div>
             <p className="text-sm">
-              <span className="font-medium">New messages:</span> You have 2 unread messages from sellers
+              <span className="font-medium text-primary">New messages:</span> You have 2 unread messages from sellers
             </p>
           </div>
-          <Button size="sm" variant="outline" className="touch-feedback">View Messages</Button>
+          <Button size="sm" variant="outline" className="touch-feedback shadow-soft rounded-lg">View Messages</Button>
         </div>
       </div>
 
@@ -157,8 +171,9 @@ export const Layout = ({
         <Button
           size="icon"
           variant="secondary"
-          className="fixed bottom-20 right-4 z-40 rounded-full shadow-medium opacity-80"
+          className="fixed bottom-20 right-4 z-40 rounded-full shadow-strong h-12 w-12"
           onClick={scrollToTop}
+          aria-label="Back to top"
         >
           <ChevronUp className="h-5 w-5" />
         </Button>
